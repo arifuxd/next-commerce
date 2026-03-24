@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  --background: #08101f;
+  --foreground: #f8fafc;
+  --surface: #101a2f;
+  --surface-soft: #13203a;
+  --muted: #93a4bf;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+html.light {
+  --background: #f4f7ff;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-soft: #e8eefc;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 122, 24, 0.24), transparent 26%),
+    radial-gradient(circle at 85% 15%, rgba(255, 179, 71, 0.2), transparent 24%),
+    linear-gradient(180deg, var(--background) 0%, #070d19 100%);
+  font-family: var(--font-sans), sans-serif;
+}
+
+html.light body {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 122, 24, 0.18), transparent 26%),
+    radial-gradient(circle at 85% 15%, rgba(255, 179, 71, 0.14), transparent 24%),
+    linear-gradient(180deg, #f8faff 0%, #edf2ff 100%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+.market-card {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(8px);
+}
+
+html.light .market-card {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 255, 0.98));
+}
+
+html.light .text-white,
+html.light .text-slate-50,
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-slate-300,
+html.light .text-slate-400 {
+  color: #1e293b !important;
+}
+
+html.light .text-orange-200,
+html.light .text-orange-300,
+html.light .text-emerald-200,
+html.light .text-rose-200 {
+  color: #c2410c !important;
+}
+
+html.light .bg-slate-950\/70,
+html.light .bg-slate-950\/60,
+html.light .bg-slate-900,
+html.light .bg-slate-900\/60,
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/25,
+html.light .border-white\/30 {
+  border-color: rgba(15, 23, 42, 0.14) !important;
+}
+
+html.light header {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(245, 248, 255, 0.86)) !important;
+}
