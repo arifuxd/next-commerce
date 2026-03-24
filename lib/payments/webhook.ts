@@ -2,7 +2,7 @@ export type PaymentWebhookPayload = {
   event_id: string;
   event_type: "payment.succeeded" | "payment.failed" | "payment.refunded";
   order_id: string;
-  payment_method?: "cod" | "bkash";
+  payment_method?: "bkash" | "sslcommerz";
   transaction_id?: string;
   amount?: number;
   currency?: string;
@@ -32,7 +32,7 @@ export function parsePaymentWebhookPayload(payload: unknown): PaymentWebhookPayl
   }
 
   const methodRaw = String(candidate.payment_method ?? "").trim();
-  const paymentMethod = methodRaw === "bkash" || methodRaw === "cod" ? methodRaw : undefined;
+  const paymentMethod = methodRaw === "bkash" || methodRaw === "sslcommerz" ? methodRaw : undefined;
 
   const amountNumber = Number(candidate.amount);
 

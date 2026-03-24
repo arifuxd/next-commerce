@@ -6,6 +6,13 @@ interface OrderStatusFormProps {
 
 const statuses = ["pending", "paid", "failed", "refunded"] as const;
 
+function statusLabel(status: (typeof statuses)[number]) {
+  if (status === "pending") return "অপেক্ষমাণ";
+  if (status === "paid") return "পরিশোধিত";
+  if (status === "failed") return "ব্যর্থ";
+  return "ফেরত";
+}
+
 export function OrderStatusForm({ orderId, currentStatus, action }: OrderStatusFormProps) {
   return (
     <form action={action} className="flex items-center gap-2">
@@ -17,12 +24,12 @@ export function OrderStatusForm({ orderId, currentStatus, action }: OrderStatusF
       >
         {statuses.map((status) => (
           <option key={status} value={status}>
-            {status}
+            {statusLabel(status)}
           </option>
         ))}
       </select>
       <button type="submit" className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-slate-100">
-        Update
+        আপডেট
       </button>
     </form>
   );

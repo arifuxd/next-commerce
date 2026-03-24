@@ -12,12 +12,14 @@ export async function signInAction(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "").trim();
   const next = String(formData.get("next") ?? "/dashboard");
+  const tab = "login";
 
   if (!email || !password) {
     redirect(
       buildRedirect("/login", {
-        error: "Email and password are required.",
+        error: "ইমেইল এবং পাসওয়ার্ড আবশ্যক।",
         next,
+        tab,
       }),
     );
   }
@@ -30,6 +32,7 @@ export async function signInAction(formData: FormData) {
       buildRedirect("/login", {
         error: error.message,
         next,
+        tab,
       }),
     );
   }
@@ -42,12 +45,14 @@ export async function signUpAction(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "").trim();
   const next = String(formData.get("next") ?? "/dashboard");
+  const tab = "signup";
 
   if (!email || !password) {
     redirect(
       buildRedirect("/login", {
-        error: "Email and password are required.",
+        error: "ইমেইল এবং পাসওয়ার্ড আবশ্যক।",
         next,
+        tab,
       }),
     );
   }
@@ -68,14 +73,16 @@ export async function signUpAction(formData: FormData) {
       buildRedirect("/login", {
         error: error.message,
         next,
+        tab,
       }),
     );
   }
 
   redirect(
     buildRedirect("/login", {
-      message: "Account created. Please sign in.",
+      message: "অ্যাকাউন্ট তৈরি হয়েছে। অনুগ্রহ করে লগইন করুন।",
       next,
+      tab: "login",
     }),
   );
 }
@@ -85,7 +92,7 @@ export async function signOutAction() {
   await supabase.auth.signOut();
   redirect(
     buildRedirect("/login", {
-      message: "You have been signed out.",
+      message: "আপনি সফলভাবে সাইন আউট হয়েছেন।",
     }),
   );
 }

@@ -8,7 +8,7 @@ if (!supabaseUrl || !serviceRoleKey) {
 }
 
 export function createAdminClient() {
-  return createClient(supabaseUrl, serviceRoleKey, {
+  return createClient(supabaseUrl!, serviceRoleKey!, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,

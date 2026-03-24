@@ -31,16 +31,16 @@ export async function createOrderAction(
   const email = normalizeEmail(String(formData.get("email") ?? ""));
   const phone = String(formData.get("phone") ?? "").trim();
   const address = String(formData.get("address") ?? "").trim();
-  const paymentMethodRaw = String(formData.get("paymentMethod") ?? "cod").trim();
+  const paymentMethodRaw = String(formData.get("paymentMethod") ?? "bkash").trim();
 
   if (!productId || !fullName || !email) {
     return {
       status: "error",
-      message: "Please provide full name and email before placing the order.",
+      message: "অর্ডার করার আগে পূর্ণ নাম এবং ইমেইল দিন।",
     };
   }
 
-  const paymentMethod = paymentMethodRaw === "bkash" ? "bkash" : "cod";
+  const paymentMethod = paymentMethodRaw === "sslcommerz" ? "sslcommerz" : "bkash";
 
   try {
     const admin = createAdminClient();
@@ -60,7 +60,7 @@ export async function createOrderAction(
     if (productError || !product) {
       return {
         status: "error",
-        message: "This product is currently unavailable.",
+        message: "এই প্রোডাক্টটি বর্তমানে উপলভ্য নয়।",
       };
     }
 
@@ -70,7 +70,7 @@ export async function createOrderAction(
     if (currentUser?.email?.toLowerCase() === email) {
       linkedUserId = currentUser.id;
       accountMessage =
-        "We found an account with this email. Your order will be linked to it.";
+        "এই ইমেইল দিয়ে একটি অ্যাকাউন্ট পাওয়া গেছে। আপনার অর্ডার সেই অ্যাকাউন্টের সঙ্গে যুক্ত হবে।";
     } else {
       const { data: existingProfile, error: profileError } = await admin
         .from("profiles")
@@ -81,14 +81,14 @@ export async function createOrderAction(
       if (profileError) {
         return {
           status: "error",
-          message: `Unable to validate customer account: ${profileError.message}`,
+          message: `গ্রাহক অ্যাকাউন্ট যাচাই করা যায়নি: ${profileError.message}`,
         };
       }
 
       if (existingProfile) {
         linkedUserId = existingProfile.id;
         accountMessage =
-          "We found an account with this email. Your order will be linked to it.";
+          "এই ইমেইল দিয়ে একটি অ্যাকাউন্ট পাওয়া গেছে। আপনার অর্ডার সেই অ্যাকাউন্টের সঙ্গে যুক্ত হবে।";
       } else {
         const generatedPassword = generatePassword();
         const { data: createdUser, error: createUserError } = await admin.auth.admin.createUser({
@@ -104,13 +104,13 @@ export async function createOrderAction(
         if (createUserError || !createdUser.user) {
           return {
             status: "error",
-            message: createUserError?.message ?? "Failed to create a new customer account.",
+            message: createUserError?.message ?? "নতুন গ্রাহক অ্যাকাউন্ট তৈরি করা যায়নি।",
           };
         }
 
         linkedUserId = createdUser.user.id;
         accountMessage =
-          "We created an account for you. Check your email for login credentials.";
+          "আপনার জন্য একটি অ্যাকাউন্ট তৈরি করা হয়েছে। লগইন তথ্যের জন্য ইমেইল দেখুন।";
 
         try {
           await sendAccountCredentialsEmail({
@@ -144,7 +144,7 @@ export async function createOrderAction(
     if (orderError || !order) {
       return {
         status: "error",
-        message: orderError?.message ?? "Failed to create order.",
+        message: orderError?.message ?? "অর্ডার তৈরি করা যায়নি।",
       };
     }
 
@@ -180,7 +180,7 @@ export async function createOrderAction(
 
     return {
       status: "success",
-      message: `Order created successfully. Order ID: ${order.id}`,
+      message: `অর্ডার সফলভাবে তৈরি হয়েছে। অর্ডার আইডি: ${order.id}`,
       accountMessage,
       orderId: order.id,
     };
@@ -188,7 +188,7 @@ export async function createOrderAction(
     console.error("Checkout error", error);
     return {
       status: "error",
-      message: "Something went wrong while placing your order. Please try again.",
+      message: "অর্ডার করার সময় একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।",
     };
   }
 }

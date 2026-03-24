@@ -32,7 +32,7 @@ async function requireAdmin() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login?next=/admin");
+    redirect("/login?next=/admin&tab=login");
   }
 
   const { data: profile } = await supabase
@@ -72,15 +72,15 @@ async function uploadToBucket(file: File, bucket: string, folder: string) {
 
 function validateProductInput(title: string, description: string, price: number, stockQuantity: number) {
   if (!title || !description) {
-    return "Title and description are required.";
+    return "শিরোনাম এবং বিবরণ আবশ্যক।";
   }
 
   if (Number.isNaN(price) || price < 0) {
-    return "Price must be a valid non-negative number.";
+    return "মূল্য অবশ্যই শূন্য বা তার বেশি বৈধ সংখ্যা হতে হবে।";
   }
 
   if (Number.isNaN(stockQuantity) || stockQuantity < 0) {
-    return "Stock quantity must be a valid non-negative number.";
+    return "স্টক পরিমাণ অবশ্যই শূন্য বা তার বেশি বৈধ সংখ্যা হতে হবে।";
   }
 
   return null;
@@ -128,9 +128,9 @@ export async function createProductAction(formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/admin");
-    redirect(buildAdminRedirect({ message: "Product created successfully." }));
+    redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে তৈরি হয়েছে।" }));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to create product.";
+    const message = error instanceof Error ? error.message : "প্রোডাক্ট তৈরি করা যায়নি।";
     redirect(buildAdminRedirect({ error: message }));
   }
 }
@@ -142,7 +142,7 @@ export async function updateProductAction(formData: FormData) {
   const productId = String(formData.get("productId") ?? "").trim();
 
   if (!productId) {
-    redirect(buildAdminRedirect({ error: "Missing product id for update." }));
+    redirect(buildAdminRedirect({ error: "আপডেটের জন্য প্রোডাক্ট আইডি পাওয়া যায়নি।" }));
   }
 
   const title = String(formData.get("title") ?? "").trim();
@@ -187,9 +187,9 @@ export async function updateProductAction(formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/admin");
-    redirect(buildAdminRedirect({ message: "Product updated successfully." }));
+    redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে আপডেট হয়েছে।" }));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to update product.";
+    const message = error instanceof Error ? error.message : "প্রোডাক্ট আপডেট করা যায়নি।";
     redirect(buildAdminRedirect({ error: message }));
   }
 }
@@ -201,7 +201,7 @@ export async function deleteProductAction(formData: FormData) {
   const productId = String(formData.get("productId") ?? "").trim();
 
   if (!productId) {
-    redirect(buildAdminRedirect({ error: "Missing product id for delete." }));
+    redirect(buildAdminRedirect({ error: "মুছার জন্য প্রোডাক্ট আইডি পাওয়া যায়নি।" }));
   }
 
   const { error } = await admin.from("products").delete().eq("id", productId);
@@ -212,7 +212,7 @@ export async function deleteProductAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
-  redirect(buildAdminRedirect({ message: "Product deleted successfully." }));
+  redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে মুছে ফেলা হয়েছে।" }));
 }
 
 export async function updateOrderPaymentStatusAction(formData: FormData) {
@@ -223,12 +223,12 @@ export async function updateOrderPaymentStatusAction(formData: FormData) {
   const paymentStatus = String(formData.get("paymentStatus") ?? "pending").trim();
 
   if (!orderId) {
-    redirect(buildAdminRedirect({ error: "Missing order id." }));
+    redirect(buildAdminRedirect({ error: "অর্ডার আইডি পাওয়া যায়নি।" }));
   }
 
   const allowed = ["pending", "paid", "failed", "refunded"];
   if (!allowed.includes(paymentStatus)) {
-    redirect(buildAdminRedirect({ error: "Invalid payment status." }));
+    redirect(buildAdminRedirect({ error: "পেমেন্ট স্ট্যাটাস সঠিক নয়।" }));
   }
 
   const { error } = await admin
@@ -242,5 +242,5 @@ export async function updateOrderPaymentStatusAction(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/dashboard");
-  redirect(buildAdminRedirect({ message: "Order payment status updated." }));
+  redirect(buildAdminRedirect({ message: "অর্ডারের পেমেন্ট স্ট্যাটাস আপডেট হয়েছে।" }));
 }

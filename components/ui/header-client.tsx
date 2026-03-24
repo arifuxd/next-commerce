@@ -10,11 +10,9 @@ interface HeaderClientProps {
 }
 
 const links = [
-  { href: "/", label: "Home", icon: "home" },
-  { href: "/products", label: "Products", icon: "grid" },
-  { href: "/about", label: "About", icon: "info" },
-  { href: "/dashboard", label: "Dashboard", icon: "user" },
-  { href: "/admin", label: "Admin", icon: "shield" },
+  { href: "/", label: "হোম", icon: "home" },
+  { href: "/products", label: "প্রোডাক্ট", icon: "grid" },
+  { href: "/about", label: "আমাদের সম্পর্কে", icon: "info" },
 ] as const;
 
 function isActivePath(pathname: string, href: string) {
@@ -33,7 +31,6 @@ function MobileIcon({ kind }: { kind: (typeof links)[number]["icon"] }) {
   if (kind === "home") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>;
   if (kind === "grid") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
   if (kind === "info") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>;
-  if (kind === "user") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>;
   return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 3 7l9 5 9-5-9-5Z"/><path d="m3 17 9 5 9-5"/><path d="m3 12 9 5 9-5"/></svg>;
 }
 
@@ -75,14 +72,14 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
               href="/dashboard"
               className="hidden rounded-full border border-white/25 px-3 py-1.5 text-xs font-semibold text-slate-100 transition hover:border-orange-300/70 hover:text-white sm:inline-flex"
             >
-              Profile
+              প্রোফাইল
             </Link>
           ) : (
             <Link
               href="/login"
               className="hidden rounded-full bg-gradient-to-r from-[#ff7a18] to-[#ffb347] px-4 py-1.5 text-xs font-black text-slate-950 sm:inline-flex"
             >
-              Login
+              লগইন
             </Link>
           )}
 
@@ -90,7 +87,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
             type="button"
             onClick={() => setOpen((v) => !v)}
             className="inline-flex rounded-full border border-white/25 bg-white/10 p-2 text-white md:hidden"
-            aria-label="Toggle menu"
+            aria-label="মেনু টগল করুন"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 6h18M3 12h18M3 18h18" />
@@ -127,7 +124,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
                 className="flex items-center gap-2 rounded-lg border border-white/20 px-3 py-2 text-sm text-slate-100"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-                Profile
+                প্রোফাইল
               </Link>
             ) : (
               <Link
@@ -136,7 +133,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
                 className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff7a18] to-[#ffb347] px-3 py-2 text-sm font-semibold text-slate-950"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
-                Login
+                লগইন
               </Link>
             )}
           </nav>

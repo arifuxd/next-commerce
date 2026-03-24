@@ -23,8 +23,8 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
       className="rounded-full border border-white/25 bg-white/10 p-2 text-white transition hover:border-orange-300/70 hover:bg-white/20"
-      aria-label="Toggle theme"
-      title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label="থিম পরিবর্তন করুন"
+      title={theme === "dark" ? "লাইট মোডে যান" : "ডার্ক মোডে যান"}
     >
       {theme === "dark" ? (
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">

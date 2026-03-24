@@ -19,7 +19,7 @@ interface DashboardOrder {
   created_at: string;
   total_price: number;
   payment_status: "pending" | "paid" | "failed" | "refunded";
-  payment_method: "cod" | "bkash" | null;
+  payment_method: "bkash" | "sslcommerz" | null;
   order_items: DashboardOrderItem[];
 }
 
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const orders = (ordersData ?? []) as DashboardOrder[];
+  const orders = (ordersData ?? []) as unknown as DashboardOrder[];
 
   return (
     <>

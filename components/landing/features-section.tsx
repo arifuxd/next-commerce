@@ -1,27 +1,27 @@
 const features = [
   {
-    title: "Step-by-step playbook",
-    body: "Clear system to launch and optimize without guesswork.",
+    title: "ধাপে ধাপে প্লেবুক",
+    body: "অনুমান ছাড়াই লঞ্চ ও অপ্টিমাইজ করার পরিষ্কার সিস্টেম।",
   },
   {
-    title: "High-converting templates",
-    body: "Ready-to-use assets designed around conversion psychology.",
+    title: "উচ্চ কনভার্টিং টেমপ্লেট",
+    body: "কনভার্সন সাইকোলজির ভিত্তিতে তৈরি রেডি-টু-ইউজ অ্যাসেট।",
   },
   {
-    title: "Performance checklists",
-    body: "Detailed launch and QA checklist so nothing gets missed.",
+    title: "পারফরম্যান্স চেকলিস্ট",
+    body: "বিস্তারিত লঞ্চ ও QA চেকলিস্ট, যাতে কিছু বাদ না যায়।",
   },
   {
-    title: "Fast implementation",
-    body: "Built for teams that need results this week, not next quarter.",
+    title: "দ্রুত বাস্তবায়ন",
+    body: "যে টিম এখনই ফলাফল চায়, তাদের জন্য তৈরি।",
   },
 ];
 
 export function FeaturesSection() {
   return (
     <section id="features" className="rounded-3xl border border-slate-200 bg-white px-6 py-10 md:px-10">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">Features</p>
-      <h2 className="mt-3 text-3xl font-black text-slate-900">Conversion-Focused Feature Stack</h2>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">ফিচার</p>
+      <h2 className="mt-3 text-3xl font-black text-slate-900">কনভার্সন-কেন্দ্রিক ফিচারসমূহ</h2>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {features.map((feature) => (
           <article key={feature.title} className="rounded-xl border border-slate-100 bg-slate-50 p-5">

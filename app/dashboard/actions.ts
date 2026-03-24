@@ -50,7 +50,7 @@ export async function requestProductDownloadAction(
   if (!productId) {
     return {
       status: "error",
-      message: "Invalid product download request.",
+      message: "ডাউনলোড অনুরোধটি সঠিক নয়।",
     };
   }
 
@@ -62,7 +62,7 @@ export async function requestProductDownloadAction(
   if (!user) {
     return {
       status: "error",
-      message: "Please log in to download purchased files.",
+      message: "কেনা ফাইল ডাউনলোড করতে অনুগ্রহ করে লগইন করুন।",
     };
   }
 
@@ -78,7 +78,7 @@ export async function requestProductDownloadAction(
   if (ordersError) {
     return {
       status: "error",
-      message: `Failed to verify paid orders: ${ordersError.message}`,
+      message: `পরিশোধিত অর্ডার যাচাই করা যায়নি: ${ordersError.message}`,
     };
   }
 
@@ -87,7 +87,7 @@ export async function requestProductDownloadAction(
   if (paidOrderIds.length === 0) {
     return {
       status: "error",
-      message: "Download becomes available after payment is confirmed.",
+      message: "পেমেন্ট নিশ্চিত হওয়ার পর ডাউনলোড পাওয়া যাবে।",
     };
   }
 
@@ -102,14 +102,14 @@ export async function requestProductDownloadAction(
   if (itemError) {
     return {
       status: "error",
-      message: `Failed to verify purchase ownership: ${itemError.message}`,
+      message: `ক্রয়ের মালিকানা যাচাই করা যায়নি: ${itemError.message}`,
     };
   }
 
   if (!matchingItem) {
     return {
       status: "error",
-      message: "You have not purchased this file yet.",
+      message: "আপনি এখনও এই ফাইলটি ক্রয় করেননি।",
     };
   }
 
@@ -122,7 +122,7 @@ export async function requestProductDownloadAction(
   if (productError || !product || !product.file_url) {
     return {
       status: "error",
-      message: "Download file is not available for this product.",
+      message: "এই প্রোডাক্টের জন্য ডাউনলোড ফাইল উপলভ্য নয়।",
     };
   }
 
@@ -130,7 +130,7 @@ export async function requestProductDownloadAction(
   if (!reference) {
     return {
       status: "error",
-      message: "Invalid storage path configured for this product file.",
+      message: "এই প্রোডাক্ট ফাইলের স্টোরেজ পাথ সঠিক নয়।",
     };
   }
 
@@ -141,13 +141,13 @@ export async function requestProductDownloadAction(
   if (signedError || !signedData?.signedUrl) {
     return {
       status: "error",
-      message: signedError?.message ?? "Failed to generate secure download link.",
+      message: signedError?.message ?? "নিরাপদ ডাউনলোড লিংক তৈরি করা যায়নি।",
     };
   }
 
   return {
     status: "success",
-    message: "Secure link ready. It expires in 15 minutes.",
+    message: "নিরাপদ লিংক তৈরি হয়েছে। এটি ১৫ মিনিট পর মেয়াদোত্তীর্ণ হবে।",
     url: signedData.signedUrl,
   };
 }

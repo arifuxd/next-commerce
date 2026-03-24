@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-500/25 to-amber-300/20 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200">
-            Featured Course
+            ফিচার্ড কোর্স
           </div>
         )}
       </div>
@@ -35,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <p className="text-xs text-slate-400 line-through">${oldPrice.toFixed(2)}</p>
           <p className="text-2xl font-black text-orange-300">${currentPrice.toFixed(2)}</p>
         </div>
-        <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-semibold text-orange-200">Save 35%</span>
+        <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-semibold text-orange-200">৩৫% সাশ্রয়</span>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-2">
@@ -43,13 +43,13 @@ export function ProductCard({ product }: ProductCardProps) {
           href={`/product/${product.slug}`}
           className="rounded-lg border border-white/20 px-3 py-2 text-center text-xs font-semibold text-slate-100 transition hover:border-orange-300/70 hover:text-white"
         >
-          View Details
+          বিস্তারিত
         </Link>
         <Link
           href={`/product/${product.slug}#checkout`}
           className="rounded-lg bg-gradient-to-r from-[#ff7a18] to-[#ffb347] px-3 py-2 text-center text-xs font-black text-slate-950"
         >
-          Buy Now
+          কিনুন
         </Link>
       </div>
     </article>

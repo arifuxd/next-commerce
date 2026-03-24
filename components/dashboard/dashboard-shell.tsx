@@ -22,7 +22,7 @@ interface DashboardOrder {
   created_at: string;
   total_price: number;
   payment_status: "pending" | "paid" | "failed" | "refunded";
-  payment_method: "cod" | "bkash" | null;
+  payment_method: "bkash" | "sslcommerz" | null;
   order_items: DashboardOrderItem[];
 }
 
@@ -38,7 +38,7 @@ interface DashboardShellProps {
 }
 
 function formatOrderDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("bn-BD", {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(date));
@@ -51,11 +51,18 @@ function paymentBadgeClass(status: DashboardOrder["payment_status"]) {
 }
 
 const tabs: Array<{ id: DashboardTab; label: string }> = [
-  { id: "dashboard", label: "Dashboard" },
-  { id: "purchases", label: "My Purchases" },
-  { id: "downloads", label: "Downloads" },
-  { id: "profile", label: "Profile" },
+  { id: "dashboard", label: "ড্যাশবোর্ড" },
+  { id: "purchases", label: "আমার ক্রয়সমূহ" },
+  { id: "downloads", label: "ডাউনলোড" },
+  { id: "profile", label: "প্রোফাইল" },
 ];
+
+function paymentStatusLabel(status: DashboardOrder["payment_status"]) {
+  if (status === "paid") return "পরিশোধিত";
+  if (status === "pending") return "অপেক্ষমাণ";
+  if (status === "failed") return "ব্যর্থ";
+  return "ফেরত";
+}
 
 function MenuIcon({ tab }: { tab: DashboardTab | "logout" }) {
   if (tab === "dashboard") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
@@ -84,7 +91,7 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
   return (
     <div className="grid gap-5 lg:grid-cols-[260px_1fr]">
       <aside className="market-card sticky top-24 h-fit rounded-2xl p-4">
-        <p className="text-sm font-bold text-white">My Workspace</p>
+        <p className="text-sm font-bold text-white">আমার ওয়ার্কস্পেস</p>
         <nav className="mt-4 space-y-2 text-sm">
           {tabs.map((tab) => (
             <button
@@ -101,10 +108,10 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
               {tab.label}
             </button>
           ))}
-          <form action={signOutAction}>
-            <button type="submit" className="mt-2 flex w-full items-center gap-2 rounded-lg border border-red-400/70 bg-red-500/25 px-3 py-2 text-left text-red-200">
+          <form action={signOutAction} className="mt-6">
+            <button type="submit" className="flex w-full items-center gap-2 rounded-lg border border-red-400/70 bg-red-500/25 px-3 py-2 text-left text-red-200">
               <MenuIcon tab="logout" />
-              Logout
+              লগআউট
             </button>
           </form>
         </nav>
@@ -113,48 +120,48 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
       <section className="space-y-5">
         {activeTab === "dashboard" ? (
           <section className="market-card rounded-2xl p-6">
-            <h1 className="text-3xl font-black text-white">Dashboard</h1>
-            <p className="mt-2 text-slate-300">Track purchases, payment status, and secure downloads.</p>
+            <h1 className="text-3xl font-black text-white">ড্যাশবোর্ড</h1>
+            <p className="mt-2 text-slate-300">আপনার ক্রয়, পেমেন্ট স্ট্যাটাস এবং সুরক্ষিত ডাউনলোড এখানে দেখুন।</p>
           </section>
         ) : null}
 
         {activeTab === "profile" ? (
           <section className="market-card rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white">Profile</h2>
+            <h2 className="text-xl font-bold text-white">প্রোফাইল</h2>
             <dl className="mt-4 grid gap-4 text-sm md:grid-cols-2">
-              <div><dt className="text-slate-400">Name</dt><dd className="text-slate-100">{profile.full_name ?? "-"}</dd></div>
-              <div><dt className="text-slate-400">Email</dt><dd className="text-slate-100">{profile.email ?? userEmail ?? "-"}</dd></div>
-              <div><dt className="text-slate-400">Phone</dt><dd className="text-slate-100">{profile.phone ?? "-"}</dd></div>
-              <div><dt className="text-slate-400">Role</dt><dd className="uppercase text-slate-100">{profile.role ?? "user"}</dd></div>
+              <div><dt className="text-slate-400">নাম</dt><dd className="text-slate-100">{profile.full_name ?? "-"}</dd></div>
+              <div><dt className="text-slate-400">ইমেইল</dt><dd className="text-slate-100">{profile.email ?? userEmail ?? "-"}</dd></div>
+              <div><dt className="text-slate-400">ফোন</dt><dd className="text-slate-100">{profile.phone ?? "-"}</dd></div>
+              <div><dt className="text-slate-400">ভূমিকা</dt><dd className="uppercase text-slate-100">{profile.role ?? "user"}</dd></div>
             </dl>
           </section>
         ) : null}
 
         {activeTab === "purchases" ? (
           <section className="market-card rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white">My Purchases</h2>
+            <h2 className="text-xl font-bold text-white">আমার ক্রয়সমূহ</h2>
             {orders.length === 0 ? (
-              <p className="mt-3 text-sm text-slate-300">No orders yet. Buy a product to see it here.</p>
+              <p className="mt-3 text-sm text-slate-300">এখনও কোনো অর্ডার নেই। একটি প্রোডাক্ট কিনলে তা এখানে দেখা যাবে।</p>
             ) : (
               <div className="mt-4 space-y-3">
                 {orders.map((order) => (
                   <article key={order.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <p className="text-sm font-semibold text-white">Order #{order.id.slice(0, 8)}</p>
+                        <p className="text-sm font-semibold text-white">অর্ডার #{order.id.slice(0, 8)}</p>
                         <p className="text-xs text-slate-400">{formatOrderDate(order.created_at)}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-bold text-orange-300">${Number(order.total_price).toFixed(2)}</span>
                         <span className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase ${paymentBadgeClass(order.payment_status)}`}>
-                          {order.payment_status}
+                          {paymentStatusLabel(order.payment_status)}
                         </span>
                       </div>
                     </div>
                     <div className="mt-3 space-y-1 text-sm text-slate-200">
                       {(order.order_items ?? []).map((item, index) => (
                         <p key={`${order.id}-${index}`}>
-                          {item.products?.title ?? "Product"} x{item.quantity} - ${Number(item.unit_price).toFixed(2)}
+                          {item.products?.title ?? "প্রোডাক্ট"} x{item.quantity} - ${Number(item.unit_price).toFixed(2)}
                         </p>
                       ))}
                     </div>
@@ -167,10 +174,10 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
 
         {activeTab === "downloads" ? (
           <section className="market-card rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white">Downloads</h2>
-            <p className="mt-2 text-sm text-slate-300">Download links unlock after payment status becomes paid.</p>
+            <h2 className="text-xl font-bold text-white">ডাউনলোড</h2>
+            <p className="mt-2 text-sm text-slate-300">পেমেন্ট স্ট্যাটাস পরিশোধিত হলে ডাউনলোড লিংক আনলক হবে।</p>
             {paidDownloads.length === 0 ? (
-              <p className="mt-3 text-sm text-slate-300">No paid downloadable products yet.</p>
+              <p className="mt-3 text-sm text-slate-300">এখনও কোনো পরিশোধিত ডাউনলোডযোগ্য প্রোডাক্ট নেই।</p>
             ) : (
               <div className="mt-4 grid gap-3 md:grid-cols-2">
                 {paidDownloads.map((product) => (

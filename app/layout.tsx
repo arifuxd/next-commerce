@@ -1,20 +1,17 @@
 ﻿import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 
-const sans = Manrope({
-  subsets: ["latin"],
+const bengaliFont = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
-});
-
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Conversion Commerce",
-  description: "High-conversion ecommerce app built with Next.js and Supabase.",
+  title: "কোর্সমার্কেটএক্স",
+  description: "নেক্সট.js ও সুপাবেস দিয়ে তৈরি বাংলা ডিজিটাল কোর্স ও প্রোডাক্ট মার্কেটপ্লেস।",
 };
 
 const themeBootScript = `
@@ -36,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${sans.variable} ${display.variable}`}>
+    <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
+      <body className={bengaliFont.variable}>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         {children}
       </body>

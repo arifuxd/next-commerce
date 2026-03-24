@@ -20,7 +20,7 @@ export function DownloadAccessForm({ productId, title }: DownloadAccessFormProps
   );
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+    <div className="rounded-xl p-4">
       <p className="text-sm font-semibold text-white">{title}</p>
 
       <form action={formAction} className="mt-3">
@@ -30,7 +30,7 @@ export function DownloadAccessForm({ productId, title }: DownloadAccessFormProps
           disabled={isPending}
           className="rounded-full bg-gradient-to-r from-[#ff7a18] to-[#ffb347] px-4 py-2 text-xs font-black text-slate-950 disabled:opacity-60"
         >
-          {isPending ? "Generating Link..." : "Get Download Link"}
+          {isPending ? "লিংক তৈরি হচ্ছে..." : "ডাউনলোড লিংক নিন"}
         </button>
       </form>
 
@@ -51,7 +51,7 @@ export function DownloadAccessForm({ productId, title }: DownloadAccessFormProps
           rel="noreferrer"
           className="mt-2 inline-block text-xs font-semibold text-orange-200 underline"
         >
-          Download now
+          এখনই ডাউনলোড করুন
         </a>
       ) : null}
     </div>

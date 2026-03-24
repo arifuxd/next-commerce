@@ -11,7 +11,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+  const supabase = createServerClient(supabaseUrl!, supabaseAnonKey!, {
     cookies: {
       getAll() {
         return request.cookies.getAll();

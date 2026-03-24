@@ -52,7 +52,7 @@ interface AdminOrder {
   customer_phone: string | null;
   total_price: number;
   payment_status: "pending" | "paid" | "failed" | "refunded";
-  payment_method: "cod" | "bkash" | null;
+  payment_method: "bkash" | "sslcommerz" | null;
   user_id: string | null;
   order_items: AdminOrderItem[];
 }
@@ -67,16 +67,16 @@ interface AdminUser {
 }
 
 function formatDate(value: string) {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("bn-BD", {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(value));
 }
 
 const tabs = [
-  { id: "products", label: "Products" },
-  { id: "orders", label: "Orders" },
-  { id: "users", label: "Users" },
+  { id: "products", label: "প্রোডাক্ট" },
+  { id: "orders", label: "অর্ডার" },
+  { id: "users", label: "ইউজার" },
 ] as const;
 
 function AdminMenuIcon({ tab }: { tab: "products" | "orders" | "users" | "logout" }) {
@@ -97,7 +97,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login?next=/admin");
+    redirect("/login?next=/admin&tab=login");
   }
 
   const { data: profile } = await supabase
@@ -129,7 +129,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   ]);
 
   const products = (productsData ?? []) as AdminProduct[];
-  const orders = (ordersData ?? []) as AdminOrder[];
+  const orders = (ordersData ?? []) as unknown as AdminOrder[];
   const users = (usersData ?? []) as AdminUser[];
 
   const selectedProduct = products.find((p) => p.id === params.edit);
@@ -140,7 +140,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       <main className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid gap-5 lg:grid-cols-[250px_1fr]">
           <aside className="market-card sticky top-24 h-fit rounded-2xl p-4">
-            <p className="text-sm font-bold text-white">Admin Console</p>
+            <p className="text-sm font-bold text-white">অ্যাডমিন কনসোল</p>
             <nav className="mt-4 space-y-2 text-sm">
               {tabs.map((tab) => (
                 <Link
@@ -156,10 +156,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   {tab.label}
                 </Link>
               ))}
-              <form action={signOutAction}>
-                <button type="submit" className="mt-2 flex w-full items-center gap-2 rounded-lg border border-red-400/70 bg-red-500/25 px-3 py-2 text-left text-red-200">
+              <form action={signOutAction} className="mt-6">
+                <button type="submit" className="flex w-full items-center gap-2 rounded-lg border border-red-400/70 bg-red-500/25 px-3 py-2 text-left text-red-200">
                   <AdminMenuIcon tab="logout" />
-                  Logout
+                  লগআউট
                 </button>
               </form>
             </nav>
@@ -167,8 +167,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
           <section className="space-y-5">
             <section className="market-card rounded-2xl p-6">
-              <h1 className="text-3xl font-black text-white">Admin Panel</h1>
-              <p className="mt-1 text-sm text-slate-300">Manage products, orders, users, testimonials, and collections.</p>
+              <h1 className="text-3xl font-black text-white">অ্যাডমিন প্যানেল</h1>
+              <p className="mt-1 text-sm text-slate-300">প্রোডাক্ট, অর্ডার, ইউজার এবং অন্যান্য কনটেন্ট ম্যানেজ করুন।</p>
             </section>
 
             {params.message ? (
@@ -183,16 +183,16 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             {activeTab === "products" ? (
               <>
                 <section className="market-card rounded-2xl p-6">
-                  <h2 className="text-xl font-bold text-white">Create Product</h2>
+                  <h2 className="text-xl font-bold text-white">নতুন প্রোডাক্ট তৈরি করুন</h2>
                   <div className="mt-4">
-                    <ProductForm title="New Product" submitLabel="Create Product" action={createProductAction} />
+                    <ProductForm title="নতুন প্রোডাক্ট" submitLabel="প্রোডাক্ট তৈরি করুন" action={createProductAction} />
                   </div>
                 </section>
 
                 <section className="market-card rounded-2xl p-6">
-                  <h2 className="text-xl font-bold text-white">Existing Products</h2>
+                  <h2 className="text-xl font-bold text-white">বিদ্যমান প্রোডাক্ট</h2>
                   {products.length === 0 ? (
-                    <p className="mt-3 text-sm text-slate-300">No products created yet.</p>
+                    <p className="mt-3 text-sm text-slate-300">এখনও কোনো প্রোডাক্ট তৈরি হয়নি।</p>
                   ) : (
                     <div className="mt-4 space-y-3">
                       {products.map((product) => (
@@ -207,12 +207,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 href={`/admin?tab=products&edit=${product.id}`}
                                 className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-slate-100"
                               >
-                                Edit
+                                সম্পাদনা
                               </Link>
                               <form action={deleteProductAction}>
                                 <input type="hidden" name="productId" value={product.id} />
                                 <button type="submit" className="rounded-full border border-rose-300/40 px-3 py-1 text-xs font-semibold text-rose-200">
-                                  Delete
+                                  মুছুন
                                 </button>
                               </form>
                             </div>
@@ -226,12 +226,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 {selectedProduct ? (
                   <section className="market-card rounded-2xl p-6">
                     <div className="mb-4 flex items-center justify-between gap-3">
-                      <h2 className="text-xl font-bold text-white">Edit Product: {selectedProduct.title}</h2>
+                      <h2 className="text-xl font-bold text-white">প্রোডাক্ট সম্পাদনা: {selectedProduct.title}</h2>
                       <Link href="/admin?tab=products" className="rounded-full border border-white/20 px-3 py-1 text-xs text-slate-200">
-                        Close
+                        বন্ধ করুন
                       </Link>
                     </div>
-                    <ProductForm title="Edit Product" submitLabel="Update Product" action={updateProductAction} values={selectedProduct} />
+                    <ProductForm title="প্রোডাক্ট সম্পাদনা" submitLabel="প্রোডাক্ট আপডেট করুন" action={updateProductAction} values={selectedProduct} />
                   </section>
                 ) : null}
               </>
@@ -239,19 +239,19 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
             {activeTab === "orders" ? (
               <section className="market-card rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-white">Orders</h2>
+                <h2 className="text-xl font-bold text-white">অর্ডারসমূহ</h2>
                 {orders.length === 0 ? (
-                  <p className="mt-3 text-sm text-slate-300">No orders yet.</p>
+                  <p className="mt-3 text-sm text-slate-300">এখনও কোনো অর্ডার নেই।</p>
                 ) : (
                   <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full text-left text-sm">
                       <thead>
                         <tr className="border-b border-white/10 text-xs uppercase tracking-[0.12em] text-slate-400">
-                          <th className="py-2 pr-4">Order</th>
-                          <th className="py-2 pr-4">Customer</th>
-                          <th className="py-2 pr-4">Items</th>
-                          <th className="py-2 pr-4">Total</th>
-                          <th className="py-2 pr-4">Status</th>
+                          <th className="py-2 pr-4">অর্ডার</th>
+                          <th className="py-2 pr-4">গ্রাহক</th>
+                          <th className="py-2 pr-4">আইটেম</th>
+                          <th className="py-2 pr-4">মোট</th>
+                          <th className="py-2 pr-4">স্ট্যাটাস</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -268,7 +268,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             <td className="py-3 pr-4">
                               {(order.order_items ?? []).map((item, idx) => (
                                 <p key={`${order.id}-${idx}`} className="text-xs text-slate-300">
-                                  {item.products?.title ?? "Product"} x{item.quantity}
+                                  {item.products?.title ?? "প্রোডাক্ট"} x{item.quantity}
                                 </p>
                               ))}
                             </td>
@@ -287,19 +287,19 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
             {activeTab === "users" ? (
               <section className="market-card rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-white">Users</h2>
+                <h2 className="text-xl font-bold text-white">ইউজারসমূহ</h2>
                 {users.length === 0 ? (
-                  <p className="mt-3 text-sm text-slate-300">No users found.</p>
+                  <p className="mt-3 text-sm text-slate-300">কোনো ইউজার পাওয়া যায়নি।</p>
                 ) : (
                   <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full text-left text-sm">
                       <thead>
                         <tr className="border-b border-white/10 text-xs uppercase tracking-[0.12em] text-slate-400">
-                          <th className="py-2 pr-4">Name</th>
-                          <th className="py-2 pr-4">Email</th>
-                          <th className="py-2 pr-4">Phone</th>
-                          <th className="py-2 pr-4">Role</th>
-                          <th className="py-2 pr-4">Joined</th>
+                          <th className="py-2 pr-4">নাম</th>
+                          <th className="py-2 pr-4">ইমেইল</th>
+                          <th className="py-2 pr-4">ফোন</th>
+                          <th className="py-2 pr-4">ভূমিকা</th>
+                          <th className="py-2 pr-4">যোগদানের তারিখ</th>
                         </tr>
                       </thead>
                       <tbody>

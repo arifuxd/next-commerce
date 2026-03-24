@@ -11,16 +11,15 @@ export function MediaSection({ imageUrl, title }: MediaSectionProps) {
           {imageUrl ? (
             <img src={imageUrl} alt={title} className="h-full max-h-[320px] w-full rounded-lg object-cover" />
           ) : (
-            <p>Product preview image/video will appear here.</p>
+            <p>প্রোডাক্টের প্রিভিউ ছবি বা ভিডিও এখানে দেখা যাবে।</p>
           )}
         </div>
       </div>
       <div className="flex flex-col justify-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Visual Walkthrough</p>
-        <h2 className="mt-3 text-3xl font-black text-slate-900">See Exactly What You Are Buying</h2>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">ভিজ্যুয়াল ওয়াকথ্রু</p>
+        <h2 className="mt-3 text-3xl font-black text-slate-900">আপনি কী কিনছেন, তা পরিষ্কারভাবে দেখুন</h2>
         <p className="mt-4 text-sm text-slate-600 md:text-base">
-          This product is built for immediate action. Every section is structured so you can implement quickly and
-          drive measurable improvement with less trial-and-error.
+          এই প্রোডাক্ট তাৎক্ষণিক কাজে লাগানোর জন্য তৈরি। প্রতিটি অংশ এমনভাবে সাজানো হয়েছে যাতে আপনি দ্রুত বাস্তবায়ন করতে পারেন এবং কম পরীক্ষা-নিরীক্ষায় ভালো ফল পান।
         </p>
       </div>
     </section>

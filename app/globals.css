@@ -7,6 +7,7 @@
   --surface-soft: #13203a;
   --muted: #93a4bf;
   --border: rgba(255, 255, 255, 0.12);
+  --font-display: var(--font-sans);
 }
 
 html.light {
