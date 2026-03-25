@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { signInAction, signUpAction } from "@/app/login/actions";
@@ -32,7 +32,7 @@ function AuthInput({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-slate-100">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-slate-100 light:text-slate-700">
         {label}
       </label>
       <input
@@ -42,7 +42,7 @@ function AuthInput({
         required={required}
         minLength={minLength}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-orange-300/70 focus:bg-white/10"
+        className="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-orange-300/70 focus:bg-white/10 light:border-slate-300 light:bg-white light:text-slate-900"
       />
     </div>
   );
@@ -55,9 +55,9 @@ export function AuthTabs({ allowSignUp, defaultTab, nextPath, error, message }: 
     <div className="mx-auto max-w-xl">
       <section className="market-card rounded-[2rem] p-5 shadow-[0_26px_70px_rgba(8,15,35,0.26)] sm:p-6">
         {allowSignUp ? (
-          <div className="relative mb-6 grid grid-cols-2 rounded-full border border-white/10 bg-white/5 p-1">
+          <div className="relative mb-6 grid grid-cols-2 rounded-full border border-white/10 bg-white/5 p-1 light:border-slate-300 light:bg-slate-100">
             <div
-              className={`absolute top-1 bottom-1 w-[calc(50%-0.25rem)] rounded-full bg-gradient-to-r from-[#ff7a18] to-[#ffb347] shadow-[0_10px_25px_rgba(255,122,24,0.3)] transition-[left] duration-300 ease-out ${
+              className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-full bg-gradient-to-r from-[#ff7a18] to-[#ffb347] shadow-[0_10px_25px_rgba(255,122,24,0.3)] transition-[left] duration-300 ease-out ${
                 activeTab === "signup" ? "left-[calc(50%_-_0.25rem)]" : "left-1"
               }`}
             />
@@ -65,25 +65,27 @@ export function AuthTabs({ allowSignUp, defaultTab, nextPath, error, message }: 
               type="button"
               onClick={() => setActiveTab("login")}
               className={`relative z-10 rounded-full px-4 py-3 text-sm font-bold transition ${
-                activeTab === "login" ? "text-slate-950" : "text-slate-200"
+                activeTab === "login" ? "text-slate-950" : "text-slate-200 light:text-slate-700"
               }`}
             >
-              লগইন
+              Login
             </button>
             <button
               type="button"
               onClick={() => setActiveTab("signup")}
               className={`relative z-10 rounded-full px-4 py-3 text-sm font-bold transition ${
-                activeTab === "signup" ? "text-slate-950" : "text-slate-200"
+                activeTab === "signup" ? "text-slate-950" : "text-slate-200 light:text-slate-700"
               }`}
             >
-              সাইন আপ
+              Sign Up
             </button>
           </div>
         ) : (
-          <div className="mb-6 rounded-[1.4rem] border border-orange-300/30 bg-orange-400/10 px-4 py-3">
-            <p className="text-sm font-semibold text-white">অ্যাডমিন লগইন প্রয়োজন</p>
-            <p className="mt-1 text-sm text-slate-300">`/admin` চালিয়ে যেতে বিদ্যমান অ্যাডমিন অ্যাকাউন্ট দিয়ে লগইন করুন।</p>
+          <div className="mb-6 rounded-[1.4rem] border border-orange-300/30 bg-orange-400/10 px-4 py-3 light:border-orange-200 light:bg-orange-50">
+            <p className="text-sm font-semibold text-white light:text-slate-900">Admin login required</p>
+            <p className="mt-1 text-sm text-slate-300 light:text-slate-600">
+              Use an existing admin account to access <code>/admin</code>.
+            </p>
           </div>
         )}
 
@@ -99,33 +101,19 @@ export function AuthTabs({ allowSignUp, defaultTab, nextPath, error, message }: 
           >
             <div className="w-full px-1">
               <div className="min-h-[27.5rem] p-1">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-200">আবার স্বাগতম</p>
-                <h2 className="mt-3 text-3xl font-black text-white">লগইন</h2>
-                <p className="mt-2 text-sm text-slate-300">প্রোফাইল, কেনাকাটা ও ডাউনলোড চালিয়ে যেতে লগইন করুন।</p>
+                <p className="text-xs font-semibold uppercase text-orange-200 light:text-orange-600">Welcome back</p>
+                <h2 className="mt-3 text-3xl font-black text-white light:text-slate-900">Login</h2>
+                <p className="mt-2 text-sm text-slate-300 light:text-slate-600">Log in to access your profile, purchases, and downloads.</p>
 
                 <form action={signInAction} className="mt-8 space-y-4">
                   <input type="hidden" name="next" value={nextPath} />
-                  <AuthInput
-                    id="signin-email"
-                    name="email"
-                    type="email"
-                    label="ইমেইল"
-                    placeholder="you@example.com"
-                    required
-                  />
-                  <AuthInput
-                    id="signin-password"
-                    name="password"
-                    type="password"
-                    label="পাসওয়ার্ড"
-                    placeholder="আপনার পাসওয়ার্ড লিখুন"
-                    required
-                  />
+                  <AuthInput id="signin-email" name="email" type="email" label="Email" placeholder="you@example.com" required />
+                  <AuthInput id="signin-password" name="password" type="password" label="Password" placeholder="Enter your password" required />
                   <button
                     type="submit"
                     className="w-full rounded-2xl bg-gradient-to-r from-[#ff7a18] to-[#ffb347] px-4 py-3 text-sm font-black text-slate-950 transition hover:shadow-[0_18px_35px_rgba(255,122,24,0.28)]"
                   >
-                    লগইন
+                    Login
                   </button>
                 </form>
               </div>
@@ -134,41 +122,28 @@ export function AuthTabs({ allowSignUp, defaultTab, nextPath, error, message }: 
             {allowSignUp ? (
               <div className="w-full px-1">
                 <div className="min-h-[27.5rem] p-1">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-200">অ্যাকাউন্ট তৈরি করুন</p>
-                  <h2 className="mt-3 text-3xl font-black text-white">সাইন আপ</h2>
-                  <p className="mt-2 text-sm text-slate-300">দ্রুত চেকআউট ও অর্ডার ট্র্যাকিংয়ের জন্য আপনার অ্যাকাউন্ট তৈরি করুন।</p>
+                  <p className="text-xs font-semibold uppercase text-orange-200 light:text-orange-600">Create account</p>
+                  <h2 className="mt-3 text-3xl font-black text-white light:text-slate-900">Sign Up</h2>
+                  <p className="mt-2 text-sm text-slate-300 light:text-slate-600">Create an account for faster checkout and order tracking.</p>
 
                   <form action={signUpAction} className="mt-8 space-y-4">
                     <input type="hidden" name="next" value={nextPath} />
-                    <AuthInput
-                      id="signup-name"
-                      name="fullName"
-                      type="text"
-                      label="পূর্ণ নাম"
-                      placeholder="আপনার পূর্ণ নাম"
-                    />
-                    <AuthInput
-                      id="signup-email"
-                      name="email"
-                      type="email"
-                      label="ইমেইল"
-                      placeholder="you@example.com"
-                      required
-                    />
+                    <AuthInput id="signup-name" name="fullName" type="text" label="Full Name" placeholder="Your full name" />
+                    <AuthInput id="signup-email" name="email" type="email" label="Email" placeholder="you@example.com" required />
                     <AuthInput
                       id="signup-password"
                       name="password"
                       type="password"
-                      label="পাসওয়ার্ড"
-                      placeholder="অন্তত ৬ অক্ষর"
+                      label="Password"
+                      placeholder="Minimum 6 characters"
                       required
                       minLength={6}
                     />
                     <button
                       type="submit"
-                      className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-black text-white transition hover:border-orange-300/60 hover:bg-white/14"
+                      className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-black text-white transition hover:border-orange-300/60 hover:bg-white/14 light:border-slate-300 light:bg-white light:text-slate-900"
                     >
-                      সাইন আপ
+                      Sign Up
                     </button>
                   </form>
                 </div>
@@ -178,12 +153,12 @@ export function AuthTabs({ allowSignUp, defaultTab, nextPath, error, message }: 
         </div>
 
         {error ? (
-          <p className="mt-5 rounded-2xl border border-rose-300/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">
+          <p className="mt-5 rounded-2xl border border-rose-300/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-200 light:border-rose-200 light:bg-rose-50 light:text-rose-700">
             {error}
           </p>
         ) : null}
         {message ? (
-          <p className="mt-4 rounded-2xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">
+          <p className="mt-4 rounded-2xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200 light:border-emerald-200 light:bg-emerald-50 light:text-emerald-700">
             {message}
           </p>
         ) : null}

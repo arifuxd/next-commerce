@@ -16,22 +16,19 @@ const links = [
 ] as const;
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/") {
-    return pathname === "/";
-  }
-
-  if (href === "/products") {
-    return pathname === "/products" || pathname.startsWith("/product/");
-  }
-
+  if (href === "/") return pathname === "/";
+  if (href === "/products") return pathname === "/products" || pathname.startsWith("/product/");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function MobileIcon({ kind }: { kind: (typeof links)[number]["icon"] }) {
-  if (kind === "home") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>;
-  if (kind === "grid") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
-  if (kind === "info") return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>;
-  return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 3 7l9 5 9-5-9-5Z"/><path d="m3 17 9 5 9-5"/><path d="m3 12 9 5 9-5"/></svg>;
+  if (kind === "home") {
+    return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>;
+  }
+  if (kind === "grid") {
+    return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
+  }
+  return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>;
 }
 
 export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
@@ -39,9 +36,9 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/15 bg-[linear-gradient(120deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] shadow-[0_8px_28px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+    <header className="sticky top-0 z-40 border-b border-white/15 bg-[linear-gradient(120deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] shadow-[0_8px_28px_rgba(0,0,0,0.35)] backdrop-blur-2xl light:border-slate-200/80 light:bg-[linear-gradient(120deg,rgba(255,255,255,0.88),rgba(255,255,255,0.68))] light:shadow-[0_8px_22px_rgba(15,23,42,0.08)]">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4">
-        <Link href="/" className="text-xl font-black tracking-tight text-white">
+        <Link href="/" className="text-xl font-black tracking-tight text-white light:text-slate-900">
           CourseMarket
           <span className="ml-1 bg-gradient-to-r from-[#ff7a18] to-[#ffb347] bg-clip-text text-transparent">X</span>
         </Link>
@@ -55,8 +52,8 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
                 href={link.href}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                   active
-                    ? "bg-gradient-to-r from-[#ff7a18]/25 to-[#ffb347]/20 text-white"
-                    : "text-slate-100 hover:bg-white/15 hover:text-white"
+                    ? "bg-gradient-to-r from-[#ff7a18]/25 to-[#ffb347]/20 text-white light:text-slate-900"
+                    : "text-slate-100 hover:bg-white/15 hover:text-white light:text-slate-700 light:hover:bg-slate-200/70 light:hover:text-slate-900"
                 }`}
               >
                 {link.label}
@@ -70,7 +67,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
           {isLoggedIn ? (
             <Link
               href="/dashboard"
-              className="hidden rounded-full border border-white/25 px-3 py-1.5 text-xs font-semibold text-slate-100 transition hover:border-orange-300/70 hover:text-white sm:inline-flex"
+              className="hidden rounded-full border border-white/25 px-3 py-1.5 text-xs font-semibold text-slate-100 transition hover:border-orange-300/70 hover:text-white light:border-slate-300 light:text-slate-700 light:hover:text-slate-900 sm:inline-flex"
             >
               প্রোফাইল
             </Link>
@@ -86,7 +83,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex rounded-full border border-white/25 bg-white/10 p-2 text-white md:hidden"
+            className="inline-flex rounded-full border border-white/25 bg-white/10 p-2 text-white light:border-slate-300 light:bg-white light:text-slate-800 md:hidden"
             aria-label="মেনু টগল করুন"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
@@ -97,7 +94,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
       </div>
 
       {open ? (
-        <div className="border-t border-white/15 px-4 pb-4 md:hidden">
+        <div className="border-t border-white/15 px-4 pb-4 light:border-slate-200 md:hidden">
           <nav className="mt-3 space-y-2">
             {links.map((link) => {
               const active = isActivePath(pathname, link.href);
@@ -108,8 +105,8 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
                   onClick={() => setOpen(false)}
                   className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
                     active
-                      ? "bg-gradient-to-r from-[#ff7a18]/25 to-[#ffb347]/20 text-white"
-                      : "text-slate-100 hover:bg-white/10"
+                      ? "bg-gradient-to-r from-[#ff7a18]/25 to-[#ffb347]/20 text-white light:text-slate-900"
+                      : "text-slate-100 hover:bg-white/10 light:text-slate-700 light:hover:bg-slate-200/70"
                   }`}
                 >
                   <MobileIcon kind={link.icon} />
@@ -121,7 +118,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
               <Link
                 href="/dashboard"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 rounded-lg border border-white/20 px-3 py-2 text-sm text-slate-100"
+                className="flex items-center gap-2 rounded-lg border border-white/20 px-3 py-2 text-sm text-slate-100 light:border-slate-300 light:text-slate-700"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
                 প্রোফাইল

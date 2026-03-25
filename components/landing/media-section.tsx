@@ -1,4 +1,4 @@
-interface MediaSectionProps {
+﻿interface MediaSectionProps {
   imageUrl: string | null;
   title: string;
 }
@@ -11,17 +11,18 @@ export function MediaSection({ imageUrl, title }: MediaSectionProps) {
           {imageUrl ? (
             <img src={imageUrl} alt={title} className="h-full max-h-[320px] w-full rounded-lg object-cover" />
           ) : (
-            <p>প্রোডাক্টের প্রিভিউ ছবি বা ভিডিও এখানে দেখা যাবে।</p>
+            <p>à¦ªà§à¦°à§‹à¦¡à¦¾à¦•à§à¦Ÿà§‡à¦° à¦ªà§à¦°à¦¿à¦­à¦¿à¦‰ à¦›à¦¬à¦¿ à¦¬à¦¾ à¦­à¦¿à¦¡à¦¿à¦“ à¦à¦–à¦¾à¦¨à§‡ à¦¦à§‡à¦–à¦¾ à¦¯à¦¾à¦¬à§‡à¥¤</p>
           )}
         </div>
       </div>
       <div className="flex flex-col justify-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">ভিজ্যুয়াল ওয়াকথ্রু</p>
-        <h2 className="mt-3 text-3xl font-black text-slate-900">আপনি কী কিনছেন, তা পরিষ্কারভাবে দেখুন</h2>
+        <p className="text-xs font-semibold uppercase text-sky-700">à¦­à¦¿à¦œà§à¦¯à§à§Ÿà¦¾à¦² à¦“à§Ÿà¦¾à¦•à¦¥à§à¦°à§</p>
+        <h2 className="mt-3 text-3xl font-black text-slate-900">à¦†à¦ªà¦¨à¦¿ à¦•à§€ à¦•à¦¿à¦¨à¦›à§‡à¦¨, à¦¤à¦¾ à¦ªà¦°à¦¿à¦·à§à¦•à¦¾à¦°à¦­à¦¾à¦¬à§‡ à¦¦à§‡à¦–à§à¦¨</h2>
         <p className="mt-4 text-sm text-slate-600 md:text-base">
-          এই প্রোডাক্ট তাৎক্ষণিক কাজে লাগানোর জন্য তৈরি। প্রতিটি অংশ এমনভাবে সাজানো হয়েছে যাতে আপনি দ্রুত বাস্তবায়ন করতে পারেন এবং কম পরীক্ষা-নিরীক্ষায় ভালো ফল পান।
+          à¦à¦‡ à¦ªà§à¦°à§‹à¦¡à¦¾à¦•à§à¦Ÿ à¦¤à¦¾à§Žà¦•à§à¦·à¦£à¦¿à¦• à¦•à¦¾à¦œà§‡ à¦²à¦¾à¦—à¦¾à¦¨à§‹à¦° à¦œà¦¨à§à¦¯ à¦¤à§ˆà¦°à¦¿à¥¤ à¦ªà§à¦°à¦¤à¦¿à¦Ÿà¦¿ à¦…à¦‚à¦¶ à¦à¦®à¦¨à¦­à¦¾à¦¬à§‡ à¦¸à¦¾à¦œà¦¾à¦¨à§‹ à¦¹à§Ÿà§‡à¦›à§‡ à¦¯à¦¾à¦¤à§‡ à¦†à¦ªà¦¨à¦¿ à¦¦à§à¦°à§à¦¤ à¦¬à¦¾à¦¸à§à¦¤à¦¬à¦¾à§Ÿà¦¨ à¦•à¦°à¦¤à§‡ à¦ªà¦¾à¦°à§‡à¦¨ à¦à¦¬à¦‚ à¦•à¦® à¦ªà¦°à§€à¦•à§à¦·à¦¾-à¦¨à¦¿à¦°à§€à¦•à§à¦·à¦¾à§Ÿ à¦­à¦¾à¦²à§‹ à¦«à¦² à¦ªà¦¾à¦¨à¥¤
         </p>
       </div>
     </section>
   );
 }
+

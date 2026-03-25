@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 
@@ -36,9 +36,10 @@ export function UrgencyCountdown({ hours = 24 }: UrgencyCountdownProps) {
 
   return (
     <div className="rounded-2xl border border-rose-200 bg-rose-50 p-5 text-center shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">সীমিত সময়ের অফার</p>
+      <p className="text-xs font-semibold uppercase text-rose-700">à¦¸à§€à¦®à¦¿à¦¤ à¦¸à¦®à§Ÿà§‡à¦° à¦…à¦«à¦¾à¦°</p>
       <p className="mt-2 text-3xl font-black text-rose-800">{formatTime(remainingMs)}</p>
-      <p className="mt-2 text-sm text-rose-700">টাইমার শেষ হলে মূল্য আগের অবস্থায় ফিরে যাবে।</p>
+      <p className="mt-2 text-sm text-rose-700">à¦Ÿà¦¾à¦‡à¦®à¦¾à¦° à¦¶à§‡à¦· à¦¹à¦²à§‡ à¦®à§‚à¦²à§à¦¯ à¦†à¦—à§‡à¦° à¦…à¦¬à¦¸à§à¦¥à¦¾à§Ÿ à¦«à¦¿à¦°à§‡ à¦¯à¦¾à¦¬à§‡à¥¤</p>
     </div>
   );
 }
+

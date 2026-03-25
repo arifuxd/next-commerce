@@ -10,7 +10,7 @@ const bengaliFont = Hind_Siliguri({
 });
 
 export const metadata: Metadata = {
-  title: "কোর্সমার্কেটএক্স",
+  title: "Course Market X",
   description: "নেক্সট.js ও সুপাবেস দিয়ে তৈরি বাংলা ডিজিটাল কোর্স ও প্রোডাক্ট মার্কেটপ্লেস।",
 };
 

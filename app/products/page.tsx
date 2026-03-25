@@ -10,7 +10,7 @@ export default async function ProductsPage() {
       <SiteHeader />
       <main className="mx-auto max-w-7xl px-4 pb-20 pt-10">
         <section className="market-card rounded-3xl p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-300">শপ</p>
+          <p className="text-xs font-semibold uppercase text-orange-300">শপ</p>
           <h1 className="mt-2 text-4xl font-black text-white">সব প্রোডাক্ট</h1>
           <p className="mt-3 text-slate-300">মার্কেটপ্লেসে থাকা সব কোর্স ও ডিজিটাল প্রোডাক্ট ঘুরে দেখুন।</p>
         </section>
@@ -30,3 +30,4 @@ export default async function ProductsPage() {
     </>
   );
 }
+

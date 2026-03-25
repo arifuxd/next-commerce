@@ -1,24 +1,18 @@
-"use server";
+﻿"use server";
 
 import { randomBytes } from "node:crypto";
-import { revalidatePath } from "next/cache";
-import { sendAccountCredentialsEmail } from "@/lib/email/send-account-credentials";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendAccountCredentialsEmail } from "@/lib/email/send-account-credentials";
 import { createClient } from "@/lib/supabase/server";
 
 export type CheckoutState = {
   status: "idle" | "error" | "success";
   message: string;
   accountMessage?: string;
-  orderId?: string;
 };
 
 function generatePassword() {
-  return randomBytes(10).toString("base64url");
-}
-
-function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
+  return randomBytes(8).toString("base64url");
 }
 
 export async function createOrderAction(
@@ -26,169 +20,147 @@ export async function createOrderAction(
   formData: FormData,
 ): Promise<CheckoutState> {
   const productId = String(formData.get("productId") ?? "").trim();
-  const productSlug = String(formData.get("productSlug") ?? "").trim();
   const fullName = String(formData.get("fullName") ?? "").trim();
-  const email = normalizeEmail(String(formData.get("email") ?? ""));
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const phone = String(formData.get("phone") ?? "").trim();
   const address = String(formData.get("address") ?? "").trim();
-  const paymentMethodRaw = String(formData.get("paymentMethod") ?? "bkash").trim();
+  const paymentMethodRaw = String(formData.get("paymentMethod") ?? "bkash").trim().toLowerCase();
 
   if (!productId || !fullName || !email) {
     return {
       status: "error",
-      message: "অর্ডার করার আগে পূর্ণ নাম এবং ইমেইল দিন।",
+      message: "Missing required checkout fields.",
     };
   }
 
-  const paymentMethod = paymentMethodRaw === "sslcommerz" ? "sslcommerz" : "bkash";
+  if (!email.includes("@")) {
+    return {
+      status: "error",
+      message: "Please enter a valid email address.",
+    };
+  }
 
-  try {
-    const admin = createAdminClient();
-    const supabase = await createClient();
+  const admin = createAdminClient();
 
-    const {
-      data: { user: currentUser },
-    } = await supabase.auth.getUser();
+  const { data: product, error: productError } = await admin
+    .from("products")
+    .select("id, title, price, is_active")
+    .eq("id", productId)
+    .maybeSingle();
 
-    const { data: product, error: productError } = await admin
-      .from("products")
-      .select("id, title, slug, price, is_active")
-      .eq("id", productId)
-      .eq("is_active", true)
+  if (productError || !product || !product.is_active) {
+    return {
+      status: "error",
+      message: "This product is not available right now.",
+    };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let linkedUserId: string | null = null;
+  let accountMessage = "";
+
+  if (user?.id && user.email?.toLowerCase() === email) {
+    linkedUserId = user.id;
+    accountMessage = "Your order is linked to your logged-in account.";
+  } else {
+    const { data: existingProfile } = await admin
+      .from("profiles")
+      .select("id, email")
+      .eq("email", email)
       .maybeSingle();
 
-    if (productError || !product) {
-      return {
-        status: "error",
-        message: "এই প্রোডাক্টটি বর্তমানে উপলভ্য নয়।",
-      };
-    }
-
-    let linkedUserId: string | null = null;
-    let accountMessage = "";
-
-    if (currentUser?.email?.toLowerCase() === email) {
-      linkedUserId = currentUser.id;
-      accountMessage =
-        "এই ইমেইল দিয়ে একটি অ্যাকাউন্ট পাওয়া গেছে। আপনার অর্ডার সেই অ্যাকাউন্টের সঙ্গে যুক্ত হবে।";
+    if (existingProfile?.id) {
+      linkedUserId = existingProfile.id;
+      accountMessage = "We found an account with this email. Your order has been linked to it.";
     } else {
-      const { data: existingProfile, error: profileError } = await admin
-        .from("profiles")
-        .select("id, email")
-        .eq("email", email)
-        .maybeSingle();
+      const generatedPassword = generatePassword();
+      const { data: createdUser, error: createUserError } = await admin.auth.admin.createUser({
+        email,
+        password: generatedPassword,
+        email_confirm: true,
+        user_metadata: { full_name: fullName },
+      });
 
-      if (profileError) {
+      if (createUserError || !createdUser.user) {
         return {
           status: "error",
-          message: `গ্রাহক অ্যাকাউন্ট যাচাই করা যায়নি: ${profileError.message}`,
+          message: createUserError?.message ?? "Could not create account for checkout.",
         };
       }
 
-      if (existingProfile) {
-        linkedUserId = existingProfile.id;
-        accountMessage =
-          "এই ইমেইল দিয়ে একটি অ্যাকাউন্ট পাওয়া গেছে। আপনার অর্ডার সেই অ্যাকাউন্টের সঙ্গে যুক্ত হবে।";
-      } else {
-        const generatedPassword = generatePassword();
-        const { data: createdUser, error: createUserError } = await admin.auth.admin.createUser({
-          email,
-          password: generatedPassword,
-          email_confirm: true,
-          user_metadata: {
-            full_name: fullName,
-            phone,
-          },
-        });
+      linkedUserId = createdUser.user.id;
 
-        if (createUserError || !createdUser.user) {
-          return {
-            status: "error",
-            message: createUserError?.message ?? "নতুন গ্রাহক অ্যাকাউন্ট তৈরি করা যায়নি।",
-          };
-        }
-
-        linkedUserId = createdUser.user.id;
-        accountMessage =
-          "আপনার জন্য একটি অ্যাকাউন্ট তৈরি করা হয়েছে। লগইন তথ্যের জন্য ইমেইল দেখুন।";
-
-        try {
-          await sendAccountCredentialsEmail({
-            email,
-            fullName,
-            password: generatedPassword,
-          });
-        } catch (emailError) {
-          console.error("Failed to send credentials email", emailError);
-        }
-      }
-    }
-
-    const totalPrice = Number(product.price);
-
-    const { data: order, error: orderError } = await admin
-      .from("orders")
-      .insert({
-        user_id: linkedUserId,
-        customer_name: fullName,
-        customer_email: email,
-        customer_phone: phone || null,
-        customer_address: address || null,
-        total_price: totalPrice,
-        payment_status: "pending",
-        payment_method: paymentMethod,
-      })
-      .select("id")
-      .single();
-
-    if (orderError || !order) {
-      return {
-        status: "error",
-        message: orderError?.message ?? "অর্ডার তৈরি করা যায়নি।",
-      };
-    }
-
-    const { error: itemError } = await admin.from("order_items").insert({
-      order_id: order.id,
-      product_id: product.id,
-      quantity: 1,
-      unit_price: totalPrice,
-    });
-
-    if (itemError) {
-      return {
-        status: "error",
-        message: itemError.message,
-      };
-    }
-
-    if (linkedUserId) {
       await admin
         .from("profiles")
-        .update({
-          full_name: fullName,
-          phone: phone || null,
+        .upsert(
+          {
+            id: linkedUserId,
+            email,
+            full_name: fullName,
+            phone: phone || null,
+          },
+          { onConflict: "id" },
+        );
+
+      try {
+        await sendAccountCredentialsEmail({
           email,
-        })
-        .eq("id", linkedUserId);
-    }
+          fullName,
+          password: generatedPassword,
+        });
+      } catch (error) {
+        console.error("[checkout] failed to send credentials", error);
+      }
 
-    if (productSlug) {
-      revalidatePath(`/product/${productSlug}`);
+      accountMessage = "We created an account for you. Check your email for login credentials.";
     }
-    revalidatePath("/dashboard");
+  }
 
-    return {
-      status: "success",
-      message: `অর্ডার সফলভাবে তৈরি হয়েছে। অর্ডার আইডি: ${order.id}`,
-      accountMessage,
-      orderId: order.id,
-    };
-  } catch (error) {
-    console.error("Checkout error", error);
+  const paymentMethod = paymentMethodRaw === "bkash" ? "bkash" : "cod";
+
+  const { data: order, error: orderError } = await admin
+    .from("orders")
+    .insert({
+      user_id: linkedUserId,
+      customer_name: fullName,
+      customer_email: email,
+      customer_phone: phone || null,
+      customer_address: address || null,
+      total_price: product.price,
+      payment_status: "pending",
+      payment_method: paymentMethod,
+    })
+    .select("id")
+    .single();
+
+  if (orderError || !order) {
     return {
       status: "error",
-      message: "অর্ডার করার সময় একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+      message: orderError?.message ?? "Could not create order.",
     };
   }
+
+  const { error: itemError } = await admin.from("order_items").insert({
+    order_id: order.id,
+    product_id: product.id,
+    quantity: 1,
+    unit_price: product.price,
+  });
+
+  if (itemError) {
+    return {
+      status: "error",
+      message: itemError.message,
+    };
+  }
+
+  return {
+    status: "success",
+    message: "Order created successfully. Payment status is pending.",
+    accountMessage,
+  };
 }

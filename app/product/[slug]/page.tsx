@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import { ProductLandingPage } from "@/components/landing/saas-product-page";
 import { SiteHeader } from "@/components/ui/site-header";
 import { getActiveProductBySlug } from "@/lib/products";
@@ -10,19 +10,19 @@ interface ProductLandingPageProps {
 
 const testimonials = [
   {
-    name: "সারা জে.",
-    role: "গ্রোথ মার্কেটার",
-    quote: "এটি ব্যবহার করার প্রথম সপ্তাহেই আমাদের কনভার্সন রেট বেড়ে যায়।",
+    name: "Sarah J.",
+    role: "Growth Marketer",
+    quote: "We saw better conversion quality right after using this framework.",
   },
   {
-    name: "নাবিল আর.",
-    role: "প্রতিষ্ঠাতা",
-    quote: "এটি আমাদের টিমকে যে স্বচ্ছতা আর কাজের গতি দিয়েছে, তা সত্যিই অসাধারণ।",
+    name: "Nabil R.",
+    role: "Founder",
+    quote: "The structure is clear and practical. Easy to execute.",
   },
   {
-    name: "এমিলি কে.",
-    role: "প্রোডাক্ট লিড",
-    quote: "খুবই ব্যবহারিক এবং দারুণ কার্যকর। অপ্রয়োজনীয় কিছু নেই, আছে শুধু ফলাফল।",
+    name: "Emily K.",
+    role: "Product Lead",
+    quote: "Simple, focused, and optimized for action.",
   },
 ];
 

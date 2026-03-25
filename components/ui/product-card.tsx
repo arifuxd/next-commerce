@@ -19,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
             className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-500/25 to-amber-300/20 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-500/25 to-amber-300/20 text-xs font-semibold uppercase text-slate-200">
             ফিচার্ড কোর্স
           </div>
         )}
@@ -55,3 +55,4 @@ export function ProductCard({ product }: ProductCardProps) {
     </article>
   );
 }
+

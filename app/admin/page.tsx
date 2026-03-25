@@ -246,7 +246,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full text-left text-sm">
                       <thead>
-                        <tr className="border-b border-white/10 text-xs uppercase tracking-[0.12em] text-slate-400">
+                        <tr className="border-b border-white/10 text-xs uppercase text-slate-400">
                           <th className="py-2 pr-4">অর্ডার</th>
                           <th className="py-2 pr-4">গ্রাহক</th>
                           <th className="py-2 pr-4">আইটেম</th>
@@ -294,7 +294,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full text-left text-sm">
                       <thead>
-                        <tr className="border-b border-white/10 text-xs uppercase tracking-[0.12em] text-slate-400">
+                        <tr className="border-b border-white/10 text-xs uppercase text-slate-400">
                           <th className="py-2 pr-4">নাম</th>
                           <th className="py-2 pr-4">ইমেইল</th>
                           <th className="py-2 pr-4">ফোন</th>
@@ -324,3 +324,4 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     </>
   );
 }
+
