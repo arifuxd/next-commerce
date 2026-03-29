@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --background: #000000;
@@ -120,5 +120,9 @@ html.light .border-white\/30 {
 }
 
 html.light header {
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(245, 248, 255, 0.86)) !important;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.26)) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05) !important;
 }
+
+

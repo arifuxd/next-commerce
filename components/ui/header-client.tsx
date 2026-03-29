@@ -36,7 +36,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/15 bg-[linear-gradient(120deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] shadow-[0_8px_28px_rgba(0,0,0,0.35)] backdrop-blur-2xl light:border-slate-200/80 light:bg-[linear-gradient(120deg,rgba(255,255,255,0.88),rgba(255,255,255,0.68))] light:shadow-[0_8px_22px_rgba(15,23,42,0.08)]">
+    <header className="sticky top-0 z-40 border-b border-white/15 bg-[linear-gradient(120deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] shadow-[0_8px_28px_rgba(0,0,0,0.35)] backdrop-blur-2xl light:border-slate-200/50 light:bg-[linear-gradient(120deg,rgba(255,255,255,0.5),rgba(255,255,255,0.22))] light:shadow-[0_4px_14px_rgba(15,23,42,0.05)] light:backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4">
         <Link href="/" className="text-xl font-black tracking-tight text-white light:text-slate-900">
           CourseMarket
@@ -94,7 +94,7 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
       </div>
 
       {open ? (
-        <div className="border-t border-white/15 px-4 pb-4 light:border-slate-200 md:hidden">
+        <div className="border-t border-white/15 px-4 pb-4 light:border-slate-200/50 md:hidden">
           <nav className="mt-3 space-y-2">
             {links.map((link) => {
               const active = isActivePath(pathname, link.href);
@@ -139,3 +139,4 @@ export function HeaderClient({ isLoggedIn }: HeaderClientProps) {
     </header>
   );
 }
+

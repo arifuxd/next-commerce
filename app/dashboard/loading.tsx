@@ -1,6 +1,5 @@
-import LoadingAnimation from "@/components/ui/loading-animation";
-import { getLoadingAnimationSrc } from "@/lib/loading-animation";
+﻿import MarketLoader from "@/components/ui/market-loader";
 
 export default function DashboardLoading() {
-  return <LoadingAnimation src={getLoadingAnimationSrc()} />;
+  return <MarketLoader />;
 }

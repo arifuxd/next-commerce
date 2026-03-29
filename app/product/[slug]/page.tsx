@@ -13,16 +13,19 @@ const testimonials = [
     name: "Sarah J.",
     role: "Growth Marketer",
     quote: "We saw better conversion quality right after using this framework.",
+    avatar: "https://i.pravatar.cc/120?img=32",
   },
   {
     name: "Nabil R.",
     role: "Founder",
     quote: "The structure is clear and practical. Easy to execute.",
+    avatar: "https://i.pravatar.cc/120?img=15",
   },
   {
     name: "Emily K.",
     role: "Product Lead",
     quote: "Simple, focused, and optimized for action.",
+    avatar: "https://i.pravatar.cc/120?img=47",
   },
 ];
 

@@ -17,7 +17,7 @@ type FormErrors = Partial<Record<"fullName" | "email" | "phone", string>>;
 interface LandingPageProps {
   product: Product;
   initialCustomer: CustomerPrefill;
-  testimonials: Array<{ name: string; role: string; quote: string }>;
+  testimonials: Array<{ name: string; role: string; quote: string; avatar?: string }>;
 }
 
 const initialCheckoutState: CheckoutState = { status: "idle", message: "" };
@@ -106,7 +106,7 @@ function Hero({ product, onBuyNow }: { product: Product; onBuyNow: () => void })
   const oldPrice = Math.max(Math.round(product.price * 2.4), product.price + 700);
 
   return (
-    <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.15),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.12),transparent_60%),#0D0D1A] py-16 md:py-24 light:bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.12),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.12),transparent_60%),#fff7ed]">
+    <section className="pl-hero relative overflow-hidden bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.15),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.12),transparent_60%),#0D0D1A] py-16 md:py-24">
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle,#8B5CF6 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
       <Container>
         <div className="relative z-10 grid items-center gap-10 md:grid-cols-2">
@@ -162,7 +162,7 @@ function Hero({ product, onBuyNow }: { product: Product; onBuyNow: () => void })
 
 function LearnSection() {
   return (
-    <section className="bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.15),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.1),transparent_60%),#0D0D1A] py-16 light:bg-slate-50">
+    <section className="pl-testimonials-section bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.12),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.08),transparent_60%),#0D0D1A] py-16">
       <Container>
         <div className="mb-12 text-center">
           <SectionTitle title="এই ইবুক পড়ে যা শিখবেন" gradient="তা আপনাকে এগিয়ে দিবে" />
@@ -176,13 +176,13 @@ function LearnSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: index * 0.05 }}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="rounded-2xl border border-[#1f3d66] bg-[#081836] p-6 shadow-[0_0_0_rgba(0,0,0,0)] transition-shadow hover:shadow-[0_16px_45px_rgba(2,8,24,0.35)] light:border-slate-200 light:bg-white"
+              className="rounded-2xl border border-[#1f3d66] bg-[#081836] p-6 shadow-[0_0_0_rgba(0,0,0,0)] transition-shadow hover:shadow-[0_16px_45px_rgba(2,8,24,0.35)]"
             >
-              <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 ${card.box} ${card.tone} light:border-slate-200`}>
+              <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 ${card.box} ${card.tone}`}>
                 <Icon kind={card.icon} className="h-5 w-5" />
               </span>
-              <h3 className="mt-4 text-2xl font-bold text-white light:text-slate-900">{card.title}</h3>
-              <p className="mt-2 text-sm text-slate-300 light:text-slate-600">{card.desc}</p>
+              <h3 className="mt-4 text-2xl font-bold text-white">{card.title}</h3>
+              <p className="mt-2 text-sm text-slate-300">{card.desc}</p>
             </motion.article>
           ))}
         </div>
@@ -196,7 +196,7 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
     <>
       <hr className="mx-auto h-px w-full max-w-none border-0 bg-gradient-to-r from-transparent via-[#2A2B4A] to-transparent light:via-slate-200" />
 
-      <section className="bg-[#0f0f1f] py-16 light:bg-white">
+      <section className="pl-section-solid bg-[#0f0f1f] py-16">
         <Container>
           <div className="mb-12 text-center">
             <SectionTitle title="কেন এই ইবুকটি" gradient="অবশ্যই পড়বেন?" />
@@ -215,7 +215,7 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.06 }}
                 whileHover={{ y: -4 }}
-                className={`rounded-xl border border-[#2A2B4A] bg-[#12132A] p-6 border-t-[3px] ${b} light:border-slate-200 light:bg-slate-50`}
+                className={`pl-why-card rounded-xl border border-[#2A2B4A] bg-[#12132A] p-6 border-t-[3px] ${b} light:border-slate-200`}
               >
                 <span className={`inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 ${box} ${tone} light:border-slate-200`}><Icon kind={icon} className="h-5 w-5" /></span>
                 <h3 className="mt-4 text-lg font-bold text-white light:text-slate-900">{title}</h3>
@@ -231,11 +231,11 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
 
       <hr className="mx-auto h-px w-full border-0 bg-gradient-to-r from-transparent via-[#2A2B4A] to-transparent light:via-slate-200" />
 
-      <section id="toc" className="bg-[#0a0a16] py-16 light:bg-[#f8fafc]">
+      <section id="toc" className="pl-section-panel pl-toc bg-[#0a0a16] py-16">
         <Container>
           <div className="mb-12 text-center">
-            <SectionTitle title="সুচিপত্র পড়ে দেখুন - তারপর সিদ্ধান্ত নিন" />
-            <p className="mx-auto mt-3 max-w-3xl text-sm text-slate-400 light:text-slate-600">কিনবো নাকি কিনবো না - কনটেন্ট আগে দেখুন।</p>
+            <SectionTitle title="সুচিপত্র পড়ে দেখুন -" gradient="তারপর সিদ্ধান্ত নিন" />
+            <p className="mx-auto mt-3 max-w-3xl text-sm text-slate-400">কিনবো নাকি কিনবো না - কনটেন্ট আগে দেখুন।</p>
           </div>
           <TocPreviewPanel product={product} onBuyNow={onBuyNow} />
         </Container>
@@ -243,21 +243,21 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
 
       <hr className="mx-auto h-px w-full border-0 bg-gradient-to-r from-transparent via-[#2A2B4A] to-transparent light:via-slate-200" />
 
-      <section className="bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.15),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.1),transparent_60%),#0D0D1A] py-16 light:bg-slate-50">
+      <section className="pl-testimonials-section bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.12),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(249,115,22,0.08),transparent_60%),#0D0D1A] py-16">
         <Container>
           <div className="mb-12 text-center">
-            <SectionTitle title="পাঠকরা কী বলছেন?" />
+            <SectionTitle title="পাঠকরা কী" gradient="বলছেন?" />
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((t, i) => (
-              <motion.article key={t.name} whileHover={{ y: -3 }} className="rounded-xl border border-[#2A2B4A] bg-[#12132A] p-6 light:border-slate-200 light:bg-white">
+              <motion.article key={t.name} whileHover={{ y: -3 }} className="pl-testimonial-card rounded-xl border border-[#2A2B4A] bg-[#12132A] p-6">
                 <p className="text-[#FBBF24]">★★★★★</p>
-                <p className="mt-3 text-sm leading-relaxed text-slate-300 light:text-slate-600">&ldquo;{t.quote}&rdquo;</p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-4 flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-orange-400/50 text-orange-300">{String(i + 1).padStart(2, "0")}</span>
+                  <img src={t.avatar ?? `https://i.pravatar.cc/120?img=${i + 10}`} alt={t.name} className="h-10 w-10 rounded-full border border-orange-400/40 object-cover" />
                   <div>
-                    <p className="text-sm font-semibold text-white light:text-slate-900">{t.name}</p>
-                    <p className="text-xs text-slate-500">{t.role}</p>
+                    <p className="text-sm font-semibold text-white">{t.name}</p>
+                    <p className="text-xs text-slate-400">{t.role}</p>
                   </div>
                 </div>
               </motion.article>
@@ -268,17 +268,32 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
 
       <hr className="mx-auto h-px w-full border-0 bg-gradient-to-r from-transparent via-[#2A2B4A] to-transparent light:via-slate-200" />
 
-      <section id="pricing" className="bg-[#0a0a16] py-16 light:bg-white">
+      <section id="pricing" className="pl-section-panel bg-[#0a0a16] py-16">
         <Container>
           <div className="mb-12 text-center">
-            <SectionTitle title="ইবুকের মূল্য ও প্যাকেজ" />
+            <SectionTitle title="ইবুকের মূল্য" gradient="ও প্যাকেজ" />
           </div>
-          <div className="mx-auto max-w-lg rounded-2xl border border-[#8B5CF6] bg-[linear-gradient(135deg,#1A1B35,#12132A)] p-8 text-center light:border-violet-300 light:bg-slate-50">
+          <div className="pl-pricing-card mx-auto max-w-lg rounded-2xl border border-[#8B5CF6] bg-[linear-gradient(135deg,#1A1B35,#12132A)] p-8 text-center light:border-violet-300 light:bg-slate-50">
             <span className="inline-flex rounded-full bg-violet-900/50 px-3 py-1 text-xs font-semibold text-violet-300 light:bg-violet-100 light:text-violet-700">সবচেয়ে জনপ্রিয়</span>
-            <h3 className="mt-4 text-2xl font-bold text-white light:text-slate-900">সম্পূর্ণ ইবুক প্যাকেজ</h3>
+            <h3 className="mt-4 text-2xl font-bold text-white">সম্পূর্ণ ইবুক প্যাকেজ</h3>
             <div className="mt-4 flex items-end justify-center gap-3">
               <span className="text-2xl text-slate-500 line-through">৳{Math.max(Math.round(product.price * 2.4), product.price + 700)}</span>
               <span className="bg-gradient-to-r from-[#F97316] to-[#FBBF24] bg-clip-text text-5xl font-bold text-transparent">৳{Number(product.price).toFixed(0)}</span>
+            </div>
+            <div className="mt-6 space-y-2 text-left">
+              {[
+                "২০০+ পেইজ প্র্যাকটিক্যাল ব্লুপ্রিন্ট",
+                "PDF + EPUB সাথে ইনস্ট্যান্ট অ্যাক্সেস",
+                "রিয়েল মার্কেটিং টেমপ্লেট ও চেকলিস্ট",
+                "লাইফটাইম আপডেট এবং সাপোর্ট",
+              ].map((item) => (
+                <p key={item} className="flex items-start gap-2 text-sm text-slate-200 light:text-slate-700">
+                  <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full border border-emerald-400/50 text-emerald-300">
+                    <Icon kind="check" className="h-2.5 w-2.5" />
+                  </span>
+                  {item}
+                </p>
+              ))}
             </div>
             <button type="button" onClick={onBuyNow} className="btn-primary shimmer-btn mt-8 w-full rounded-lg px-5 py-4 text-lg font-semibold text-white">এখনই ইবুক কিনুন</button>
           </div>
@@ -287,10 +302,10 @@ function InfoSections({ product, testimonials, onBuyNow }: { product: Product; t
 
       <hr className="mx-auto h-px w-full border-0 bg-gradient-to-r from-transparent via-[#2A2B4A] to-transparent light:via-slate-200" />
 
-      <section id="faq" className="bg-[#0a0a16] py-16 light:bg-white">
+      <section id="faq" className="pl-section-panel bg-[#0a0a16] py-16">
         <Container>
           <div className="mb-12 text-center">
-            <SectionTitle title="সচরাচর জিজ্ঞাসা (FAQ)" />
+            <SectionTitle title="সচরাচর জিজ্ঞাসা" gradient="(FAQ)" />
           </div>
           <FaqBlock />
         </Container>
@@ -313,25 +328,25 @@ function TocPreviewPanel({ product, onBuyNow }: { product: Product; onBuyNow: ()
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-[#2A2B4A] bg-[#0b1228] light:border-slate-300 light:bg-white">
+    <div className="overflow-hidden rounded-3xl border border-[#2A2B4A] bg-[#0b1228]">
       <div className="grid lg:grid-cols-[1.3fr_0.7fr]">
-        <div className="relative border-r border-[#2A2B4A] p-4 light:border-slate-200">
-          <button type="button" onClick={() => setIndex((v) => (v - 1 + slides.length) % slides.length)} className="absolute left-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2B4A] bg-[#050b1a] text-white light:border-slate-300 light:bg-white light:text-slate-700" aria-label="Previous"><Icon kind="arrow" className="h-4 w-4 rotate-180" /></button>
-          <button type="button" onClick={() => setIndex((v) => (v + 1) % slides.length)} className="absolute right-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2B4A] bg-[#050b1a] text-white light:border-slate-300 light:bg-white light:text-slate-700" aria-label="Next"><Icon kind="arrow" className="h-4 w-4" /></button>
+        <div className="relative border-r border-[#2A2B4A] p-4">
+          <button type="button" onClick={() => setIndex((v) => (v - 1 + slides.length) % slides.length)} className="absolute left-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2B4A] bg-[#050b1a] text-white" aria-label="Previous"><Icon kind="arrow" className="h-4 w-4 rotate-180" /></button>
+          <button type="button" onClick={() => setIndex((v) => (v + 1) % slides.length)} className="absolute right-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2B4A] bg-[#050b1a] text-white" aria-label="Next"><Icon kind="arrow" className="h-4 w-4" /></button>
 
-          <div className="mx-auto max-w-md rounded-xl bg-[#020716] p-3 light:bg-slate-100">
+          <div className="mx-auto max-w-md rounded-xl bg-[#020716] p-3">
             <div className="overflow-hidden rounded-md border border-white/10">
               <img src={slides[index]} alt={`Preview page ${index + 1}`} className="h-[560px] w-full object-cover" />
             </div>
           </div>
 
           <div className="mt-3 text-center">
-            <span className="inline-flex rounded-full border border-[#2A2B4A] bg-[#050b1a] px-3 py-1 text-xs text-slate-300 light:border-slate-300 light:bg-white light:text-slate-600">Page {index + 1} of {slides.length}</span>
+            <span className="inline-flex rounded-full border border-[#2A2B4A] bg-[#050b1a] px-3 py-1 text-xs text-slate-300">Page {index + 1} of {slides.length}</span>
           </div>
         </div>
 
-        <div className="flex flex-col bg-[#0e162b] light:bg-slate-50">
-          <div className="flex items-center gap-2 border-b border-[#2A2B4A] px-5 py-4 text-sm font-semibold uppercase text-[#FBBF24] light:border-slate-200">
+        <div className="flex flex-col bg-[#0e162b]">
+          <div className="flex items-center gap-2 border-b border-[#2A2B4A] px-5 py-4 text-sm font-semibold uppercase text-[#FBBF24]">
             <Icon kind="book" className="h-4 w-4" />
             Table of Contents
           </div>
@@ -346,9 +361,9 @@ function TocPreviewPanel({ product, onBuyNow }: { product: Product; onBuyNow: ()
               );
             })}
           </div>
-          <div className="border-t border-[#2A2B4A] px-5 py-4 light:border-slate-200">
+          <div className="border-t border-[#2A2B4A] px-5 py-4">
             <p className="text-[11px] uppercase text-slate-400">Full Version</p>
-            <p className="mt-1 text-2xl font-bold text-white light:text-slate-900">২০০+ পেইজ</p>
+            <p className="mt-1 text-2xl font-bold text-white">২০০+ পেইজ</p>
             <button type="button" onClick={onBuyNow} className="btn-primary shimmer-btn mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white"><Icon kind="download" className="h-4 w-4" />এখনই কিনুন ({Number(product.price).toFixed(0)})</button>
           </div>
         </div>
@@ -362,7 +377,7 @@ function FaqBlock() {
   return (
     <div className="mx-auto max-w-3xl space-y-3">
       {faqItems.map(([q, a], i) => (
-        <article key={q} className="rounded-lg border border-[#2A2B4A] bg-[#12132A] px-5 py-4 light:border-slate-200 light:bg-slate-50">
+        <article key={q} className="pl-faq-card rounded-lg border border-[#2A2B4A] bg-[#12132A] px-5 py-4 light:border-slate-200">
           <button type="button" onClick={() => setOpen(open === i ? -1 : i)} className="flex w-full items-center justify-between text-left">
             <span className="text-sm font-semibold text-white light:text-slate-900">{q}</span>
             <span className="text-lg text-orange-400">{open === i ? "−" : "+"}</span>
@@ -424,35 +439,45 @@ function CheckoutModalContent({ onClose, product, initialCustomer }: { onClose: 
 
   return (
     <motion.div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14 }} className="relative w-full max-w-2xl rounded-2xl border border-[#2A2B4A] bg-[#12132A] p-5 light:border-slate-300 light:bg-white">
-        <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-slate-200 light:border-slate-300 light:bg-slate-100 light:text-slate-700">Close</button>
+      <motion.div initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14 }} className="relative w-full max-w-2xl rounded-2xl border border-[#2A2B4A] bg-[#12132A] p-5 pt-14">
+        <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white">Close</button>
 
         <div className="grid gap-5 md:grid-cols-[0.4fr_0.6fr]">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4 light:border-slate-300 light:bg-slate-50">
-            <p className="text-xs font-semibold uppercase text-orange-300 light:text-orange-600">Checkout</p>
-            <h3 className="mt-2 text-2xl font-black text-white light:text-slate-900">{product.title}</h3>
-            <p className="mt-2 text-sm text-slate-300 light:text-slate-600">অর্ডার কনফার্ম করতে তথ্য দিন।</p>
-            <p className="mt-4 text-3xl font-black text-[#FBBF24] light:text-orange-600">৳{Number(product.price).toFixed(0)}</p>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+            <p className="text-xs font-semibold uppercase text-orange-300">Checkout</p>
+            <h3 className="mt-2 text-2xl font-black text-white">{product.title}</h3>
+            <div className="mt-3 overflow-hidden rounded-xl border border-white/10">
+              <img src={product.image_url ?? "/window.svg"} alt={product.title} className="h-32 w-full object-cover" />
+            </div>
+            <p className="mt-3 text-sm text-slate-300">অর্ডার কনফার্ম করতে তথ্য দিন।</p>
+            <p className="mt-4 text-3xl font-black text-[#FBBF24]">৳{Number(product.price).toFixed(0)}</p>
           </div>
 
           <form action={formAction} onSubmit={handleSubmit} className="space-y-3">
             <input type="hidden" name="productId" value={product.id} />
             <input type="hidden" name="productSlug" value={product.slug} />
             <input type="hidden" name="paymentMethod" value={paymentMethod} />
-            <Field label="Full Name" error={errors.fullName}><input name="fullName" defaultValue={initialCustomer.fullName} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white light:border-slate-300 light:bg-white light:text-slate-900" placeholder="Your full name" /></Field>
-            <Field label="Email" error={errors.email}><input name="email" type="email" defaultValue={initialCustomer.email} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white light:border-slate-300 light:bg-white light:text-slate-900" placeholder="you@example.com" /></Field>
-            <Field label="Phone" error={errors.phone}><input name="phone" defaultValue={initialCustomer.phone} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white light:border-slate-300 light:bg-white light:text-slate-900" placeholder="01XXXXXXXXX" /></Field>
+            <Field label="Full Name" error={errors.fullName}><input name="fullName" defaultValue={initialCustomer.fullName} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-slate-400" placeholder="Your full name" /></Field>
+            <Field label="Email" error={errors.email}><input name="email" type="email" defaultValue={initialCustomer.email} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-slate-400" placeholder="you@example.com" /></Field>
+            <Field label="Phone" error={errors.phone}><input name="phone" defaultValue={initialCustomer.phone} className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-slate-400" placeholder="01XXXXXXXXX" /></Field>
             <div>
-              <p className="mb-2 text-sm font-semibold text-slate-100 light:text-slate-700">Payment Method</p>
+              <p className="mb-2 text-sm font-semibold text-slate-100">Payment Method</p>
               <div className="grid gap-2 sm:grid-cols-2">
                 {[{ id: "bkash", label: "bKash" }, { id: "sslcommerz", label: "SSLCommerz" }].map((option) => (
-                  <button key={option.id} type="button" onClick={() => setPaymentMethod(option.id as PaymentMethod)} className={`rounded-xl border px-3 py-2 text-sm ${paymentMethod === option.id ? "border-orange-300/50 bg-orange-500/15 text-white light:border-orange-300 light:bg-orange-50 light:text-slate-900" : "border-white/15 bg-white/5 text-slate-300 light:border-slate-300 light:bg-white light:text-slate-700"}`}>{option.label}</button>
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setPaymentMethod(option.id as PaymentMethod)}
+                    className={`rounded-xl border px-3 py-2 text-sm ${paymentMethod === option.id ? "border-orange-300/50 bg-orange-500/15 text-white" : "border-white/15 bg-white/5 text-white/80"}`}
+                  >
+                    {option.label}
+                  </button>
                 ))}
               </div>
             </div>
             <button type="submit" disabled={isPending} className="btn-primary shimmer-btn w-full rounded-xl px-5 py-3 text-sm font-black text-white disabled:opacity-60">{isPending ? "Processing..." : "Place Order"}</button>
-            {state.accountMessage ? <p className="rounded-xl border border-cyan-300/30 bg-cyan-500/10 px-3 py-2 text-sm text-cyan-100 light:border-cyan-200 light:bg-cyan-50 light:text-cyan-700">{state.accountMessage}</p> : null}
-            {state.message ? <p className={`rounded-xl border px-3 py-2 text-sm ${state.status === "success" ? "border-emerald-300/25 bg-emerald-500/10 text-emerald-100 light:border-emerald-200 light:bg-emerald-50 light:text-emerald-700" : "border-rose-300/25 bg-rose-500/10 text-rose-100 light:border-rose-200 light:bg-rose-50 light:text-rose-700"}`}>{state.message}</p> : null}
+            {state.accountMessage ? <p className="rounded-xl border border-cyan-300/30 bg-cyan-500/10 px-3 py-2 text-sm text-cyan-100">{state.accountMessage}</p> : null}
+            {state.message ? <p className={`rounded-xl border px-3 py-2 text-sm ${state.status === "success" ? "border-emerald-300/25 bg-emerald-500/10 text-emerald-100" : "border-rose-300/25 bg-rose-500/10 text-rose-100"}`}>{state.message}</p> : null}
           </form>
         </div>
       </motion.div>
@@ -464,11 +489,74 @@ export function ProductLandingPage({ product, initialCustomer, testimonials }: L
   const [openCheckout, setOpenCheckout] = useState(false);
 
   return (
-    <div className="w-full bg-[#0D0D1A] light:bg-[#f8fafc]">
+    <div className="product-landing w-full bg-[#0D0D1A] light:bg-[#f8fafc]">
       <Hero product={product} onBuyNow={() => setOpenCheckout(true)} />
       <InfoSections product={product} testimonials={testimonials} onBuyNow={() => setOpenCheckout(true)} />
       <StickyBuyBar product={product} onBuyNow={() => setOpenCheckout(true)} />
-      <CheckoutModal isOpen={openCheckout} onClose={() => setOpenCheckout(false)} product={product} initialCustomer={initialCustomer} />      <style jsx global>{`
+      <CheckoutModal isOpen={openCheckout} onClose={() => setOpenCheckout(false)} product={product} initialCustomer={initialCustomer} />
+      <style jsx global>{`
+        html.light .product-landing {
+          background: #f8fafc !important;
+          color: #0f172a;
+        }
+        html.light .product-landing button,
+        html.light .product-landing [role="button"] {
+          color: #ffffff !important;
+        }
+        html.light .product-landing .pl-why-card {
+          background: #ffffff !important;
+        }
+        html.light .product-landing .pl-learn-section {
+          background: radial-gradient(ellipse at top left, rgba(139, 92, 246, 0.15), transparent 60%), radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.1), transparent 60%), #0d0d1a !important;
+        }
+        html.light .product-landing .pl-learn-section h2,
+        html.light .product-landing .pl-learn-section h3,
+        html.light .product-landing .pl-learn-section p {
+          color: #ffffff !important;
+        }
+        html.light .product-landing .pl-toc,
+        html.light .product-landing .pl-toc * {
+          color-scheme: dark;
+        }
+        html.light .product-landing .pl-toc .text-white {
+          color: #ffffff !important;
+        }
+        html.light .product-landing .pl-toc .text-slate-400,
+        html.light .product-landing .pl-toc .text-slate-300,
+        html.light .product-landing .pl-toc .text-slate-500,
+        html.light .product-landing .pl-toc .text-slate-600,
+        html.light .product-landing .pl-toc .text-slate-700,
+        html.light .product-landing .pl-toc .text-slate-900 {
+          color: inherit !important;
+        }
+        html.light .product-landing .pl-testimonials-section {
+          background: radial-gradient(ellipse at top left, rgba(139, 92, 246, 0.08), transparent 60%), radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.06), transparent 60%), #0d0d1a !important;
+        }
+        html.light .product-landing .pl-testimonials-section .pl-testimonial-card {
+          background: #12132a !important;
+          border-color: #2a2b4a !important;
+        }
+        html.light .product-landing .pl-section-solid {
+          background: #ffffff !important;
+        }
+        html.light .product-landing .pl-section-panel {
+          background: #f8fafc !important;
+        }
+        html.light .product-landing .pl-section-gradient {
+          background: radial-gradient(ellipse at top left, rgba(139, 92, 246, 0.1), transparent 60%), radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.1), transparent 60%), #f3f6ff !important;
+        }
+        html.light .product-landing .pl-testimonial-card {
+          background: #ffffff !important;
+          border-color: rgba(15, 23, 42, 0.12) !important;
+        }
+        html.light .product-landing .pl-pricing-card {
+          background: linear-gradient(135deg, #ffffff, #f8fafc) !important;
+          border-color: rgba(124, 58, 237, 0.35) !important;
+        }
+        html.light .product-landing .pl-faq-card {
+          background: #ffffff !important;
+          border-color: rgba(15, 23, 42, 0.12) !important;
+        }
         .btn-primary {
           background-color: #f97316 !important;
           background-image: linear-gradient(135deg, #f97316, #ea580c) !important;
@@ -506,13 +594,3 @@ export function ProductLandingPage({ product, initialCustomer, testimonials }: L
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
