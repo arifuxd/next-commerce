@@ -8,7 +8,7 @@ export function StickyBuyNowBar({ price }: StickyBuyNowBarProps) {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <div>
           <p className="text-xs uppercase text-slate-500">à¦¸à§€à¦®à¦¿à¦¤ à¦…à¦«à¦¾à¦°</p>
-          <p className="text-sm font-bold text-slate-900">à¦à¦–à¦¨à¦‡ à¦•à¦¿à¦¨à§à¦¨ ${Number(price).toFixed(2)} à¦¦à¦¾à¦®à§‡</p>
+          <p className="text-sm font-bold text-slate-900">à¦à¦–à¦¨à¦‡ à¦•à¦¿à¦¨à§à¦¨ ৳{Number(price).toFixed(2)} à¦¦à¦¾à¦®à§‡</p>
         </div>
         <a
           href="#checkout"
@@ -20,4 +20,5 @@ export function StickyBuyNowBar({ price }: StickyBuyNowBarProps) {
     </div>
   );
 }
+
 

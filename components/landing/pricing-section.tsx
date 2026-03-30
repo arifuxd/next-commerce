@@ -10,7 +10,7 @@ export function PricingSection({ price, stockQuantity }: PricingSectionProps) {
       <h2 className="mt-3 text-3xl font-black text-slate-900">à¦†à¦œà¦‡ à¦¤à¦¾à§Žà¦•à§à¦·à¦£à¦¿à¦• à¦…à§à¦¯à¦¾à¦•à§à¦¸à§‡à¦¸ à¦¨à¦¿à¦¨</h2>
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-4xl font-black text-slate-900">${Number(price).toFixed(2)}</p>
+          <p className="text-4xl font-black text-slate-900">৳{Number(price).toFixed(2)}</p>
           <p className="mt-1 text-sm text-slate-700">à¦à¦•à¦¬à¦¾à¦°à§‡à¦° à¦ªà§‡à¦®à§‡à¦¨à§à¦Ÿà¥¤ à¦•à§‹à¦¨à§‹ à¦ªà§à¦¨à¦°à¦¾à¦¬à§ƒà¦¤à§à¦¤ à¦«à¦¿ à¦¨à§‡à¦‡à¥¤</p>
         </div>
         <a
@@ -24,4 +24,5 @@ export function PricingSection({ price, stockQuantity }: PricingSectionProps) {
     </section>
   );
 }
+
 

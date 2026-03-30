@@ -53,7 +53,7 @@ export function InlineCheckoutForm({ product, initialCustomer }: InlineCheckoutF
         </div>
         <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-right">
           <p className="text-xs uppercase text-slate-500">à¦®à§‹à¦Ÿ</p>
-          <p className="text-xl font-black text-slate-900">${Number(product.price).toFixed(2)}</p>
+          <p className="text-xl font-black text-slate-900">৳{Number(product.price).toFixed(2)}</p>
         </div>
       </div>
 
@@ -143,4 +143,5 @@ export function InlineCheckoutForm({ product, initialCustomer }: InlineCheckoutF
     </section>
   );
 }
+
 

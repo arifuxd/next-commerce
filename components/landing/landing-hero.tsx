@@ -17,7 +17,7 @@ export function LandingHero({ product }: LandingHeroProps) {
           href="#pricing"
           className="rounded-full bg-amber-300 px-6 py-3 text-sm font-bold text-slate-900 transition hover:bg-amber-200"
         >
-          à¦à¦–à¦¨à¦‡ à¦•à¦¿à¦¨à§à¦¨ - ${Number(product.price).toFixed(2)}
+          à¦à¦–à¦¨à¦‡ à¦•à¦¿à¦¨à§à¦¨ - ৳{Number(product.price).toFixed(2)}
         </a>
         <a href="#features" className="rounded-full border border-white/50 px-6 py-3 text-sm font-semibold">
           à¦«à¦¿à¦šà¦¾à¦° à¦¦à§‡à¦–à§à¦¨
@@ -26,4 +26,5 @@ export function LandingHero({ product }: LandingHeroProps) {
     </section>
   );
 }
+
 

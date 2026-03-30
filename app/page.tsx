@@ -101,8 +101,8 @@ export default async function HomePage() {
             <p className="mt-3 text-sm text-slate-300 light:text-slate-600">ল্যান্ডিং টেমপ্লেট, আউটরিচ স্ক্রিপ্ট, প্রপোজাল সিস্টেম এবং প্রাইসিং প্লেবুক একসাথে।</p>
             <div className="mt-6 flex items-center justify-between">
               <div>
-                <p className="text-sm line-through text-slate-400">$149.00</p>
-                <p className="text-3xl font-black text-orange-300 light:text-orange-600">$89.00</p>
+                <p className="text-sm line-through text-slate-400">৳149.00</p>
+                <p className="text-3xl font-black text-orange-300 light:text-orange-600">৳89.00</p>
               </div>
               <Link
                 href={products[0] ? `/product/${products[0].slug}` : "/"}
@@ -222,3 +222,4 @@ export default async function HomePage() {
     </>
   );
 }
+

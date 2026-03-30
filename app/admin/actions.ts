@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
@@ -72,15 +72,15 @@ async function uploadToBucket(file: File, bucket: string, folder: string) {
 
 function validateProductInput(title: string, description: string, price: number, stockQuantity: number) {
   if (!title || !description) {
-    return "শিরোনাম এবং বিবরণ আবশ্যক।";
+    return "Title and description are required.";
   }
 
   if (Number.isNaN(price) || price < 0) {
-    return "মূল্য অবশ্যই শূন্য বা তার বেশি বৈধ সংখ্যা হতে হবে।";
+    return "Price must be a valid number zero or greater.";
   }
 
   if (Number.isNaN(stockQuantity) || stockQuantity < 0) {
-    return "স্টক পরিমাণ অবশ্যই শূন্য বা তার বেশি বৈধ সংখ্যা হতে হবে।";
+    return "Stock quantity must be a valid number zero or greater.";
   }
 
   return null;
@@ -128,9 +128,9 @@ export async function createProductAction(formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/admin");
-    redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে তৈরি হয়েছে।" }));
+    redirect(buildAdminRedirect({ message: "Product created successfully." }));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "প্রোডাক্ট তৈরি করা যায়নি।";
+    const message = error instanceof Error ? error.message : "Product could not be created.";
     redirect(buildAdminRedirect({ error: message }));
   }
 }
@@ -142,7 +142,7 @@ export async function updateProductAction(formData: FormData) {
   const productId = String(formData.get("productId") ?? "").trim();
 
   if (!productId) {
-    redirect(buildAdminRedirect({ error: "আপডেটের জন্য প্রোডাক্ট আইডি পাওয়া যায়নি।" }));
+    redirect(buildAdminRedirect({ error: "Product ID was not found for update." }));
   }
 
   const title = String(formData.get("title") ?? "").trim();
@@ -187,9 +187,9 @@ export async function updateProductAction(formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/admin");
-    redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে আপডেট হয়েছে।" }));
+    redirect(buildAdminRedirect({ message: "Product updated successfully." }));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "প্রোডাক্ট আপডেট করা যায়নি।";
+    const message = error instanceof Error ? error.message : "Product could not be updated.";
     redirect(buildAdminRedirect({ error: message }));
   }
 }
@@ -201,7 +201,7 @@ export async function deleteProductAction(formData: FormData) {
   const productId = String(formData.get("productId") ?? "").trim();
 
   if (!productId) {
-    redirect(buildAdminRedirect({ error: "মুছার জন্য প্রোডাক্ট আইডি পাওয়া যায়নি।" }));
+    redirect(buildAdminRedirect({ error: "Product ID was not found for deletion." }));
   }
 
   const { error } = await admin.from("products").delete().eq("id", productId);
@@ -212,7 +212,7 @@ export async function deleteProductAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
-  redirect(buildAdminRedirect({ message: "প্রোডাক্ট সফলভাবে মুছে ফেলা হয়েছে।" }));
+  redirect(buildAdminRedirect({ message: "Product deleted successfully." }));
 }
 
 export async function updateOrderPaymentStatusAction(formData: FormData) {
@@ -223,12 +223,12 @@ export async function updateOrderPaymentStatusAction(formData: FormData) {
   const paymentStatus = String(formData.get("paymentStatus") ?? "pending").trim();
 
   if (!orderId) {
-    redirect(buildAdminRedirect({ error: "অর্ডার আইডি পাওয়া যায়নি।" }));
+    redirect(buildAdminRedirect({ error: "Order ID was not found." }));
   }
 
   const allowed = ["pending", "paid", "failed", "refunded"];
   if (!allowed.includes(paymentStatus)) {
-    redirect(buildAdminRedirect({ error: "পেমেন্ট স্ট্যাটাস সঠিক নয়।" }));
+    redirect(buildAdminRedirect({ error: "Invalid payment status." }));
   }
 
   const { error } = await admin
@@ -242,5 +242,5 @@ export async function updateOrderPaymentStatusAction(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/dashboard");
-  redirect(buildAdminRedirect({ message: "অর্ডারের পেমেন্ট স্ট্যাটাস আপডেট হয়েছে।" }));
+  redirect(buildAdminRedirect({ message: "Order payment status updated." }));
 }

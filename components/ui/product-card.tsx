@@ -32,8 +32,8 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="mt-4 flex items-end justify-between">
         <div>
-          <p className="text-xs text-slate-400 line-through">${oldPrice.toFixed(2)}</p>
-          <p className="text-2xl font-black text-orange-300">${currentPrice.toFixed(2)}</p>
+          <p className="text-xs text-slate-400 line-through">৳{oldPrice.toFixed(2)}</p>
+          <p className="text-2xl font-black text-orange-300">৳{currentPrice.toFixed(2)}</p>
         </div>
         <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-semibold text-orange-200">৩৫% সাশ্রয়</span>
       </div>
@@ -55,4 +55,5 @@ export function ProductCard({ product }: ProductCardProps) {
     </article>
   );
 }
+
 

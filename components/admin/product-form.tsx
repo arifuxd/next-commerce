@@ -1,4 +1,4 @@
-interface ProductFormValues {
+﻿interface ProductFormValues {
   id?: string;
   title?: string;
   slug?: string;
@@ -26,40 +26,40 @@ export function ProductForm({ title, submitLabel, action, values }: ProductFormP
         {values?.id ? <input type="hidden" name="productId" value={values.id} /> : null}
 
         <label className="text-sm font-medium text-slate-200">
-          শিরোনাম
+          Title
           <input
             name="title"
             required
             defaultValue={values?.title ?? ""}
             className="mt-1 w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-slate-100"
-            placeholder="প্রোডাক্টের নাম"
+            placeholder="Product name"
           />
         </label>
 
         <label className="text-sm font-medium text-slate-200">
-          স্লাগ
+          Slug
           <input
             name="slug"
             defaultValue={values?.slug ?? ""}
             className="mt-1 w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-slate-100"
-            placeholder="ফাঁকা রাখলে স্বয়ংক্রিয়ভাবে তৈরি হবে"
+            placeholder="Leave blank to auto-generate"
           />
         </label>
 
         <label className="text-sm font-medium text-slate-200 md:col-span-2">
-          বিবরণ
+          Description
           <textarea
             name="description"
             required
             defaultValue={values?.description ?? ""}
             rows={4}
             className="mt-1 w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-slate-100"
-            placeholder="বিক্রয় বিবরণ লিখুন"
+            placeholder="Write a sales-focused description"
           />
         </label>
 
         <label className="text-sm font-medium text-slate-200">
-          মূল্য
+          Price
           <input
             name="price"
             required
@@ -72,7 +72,7 @@ export function ProductForm({ title, submitLabel, action, values }: ProductFormP
         </label>
 
         <label className="text-sm font-medium text-slate-200">
-          স্টক পরিমাণ
+          Stock quantity
           <input
             name="stockQuantity"
             type="number"
@@ -84,18 +84,18 @@ export function ProductForm({ title, submitLabel, action, values }: ProductFormP
         </label>
 
         <label className="text-sm font-medium text-slate-200">
-          প্রোডাক্ট ছবি (ঐচ্ছিক)
+          Product image (optional)
           <input name="imageFile" type="file" accept="image/*" className="mt-1 block w-full text-sm text-slate-300" />
         </label>
 
         <label className="text-sm font-medium text-slate-200">
-          ডাউনলোডযোগ্য ফাইল (ঐচ্ছিক)
+          Downloadable file (optional)
           <input name="downloadFile" type="file" className="mt-1 block w-full text-sm text-slate-300" />
         </label>
 
         <label className="flex items-center gap-2 text-sm font-medium text-slate-200 md:col-span-2">
           <input type="checkbox" name="isActive" defaultChecked={values?.is_active ?? true} />
-          সক্রিয় (পাবলিক স্টোরে দেখা যাবে)
+          Active (visible in the public store)
         </label>
 
         <div className="md:col-span-2">
@@ -106,10 +106,10 @@ export function ProductForm({ title, submitLabel, action, values }: ProductFormP
       </form>
 
       {values?.image_url ? (
-        <p className="mt-2 text-xs text-slate-400">বর্তমান ছবির পাথ: {values.image_url}</p>
+        <p className="mt-2 text-xs text-slate-400">Current image path: {values.image_url}</p>
       ) : null}
       {values?.file_url ? (
-        <p className="mt-1 text-xs text-slate-400">বর্তমান ফাইলের পাথ: {values.file_url}</p>
+        <p className="mt-1 text-xs text-slate-400">Current file path: {values.file_url}</p>
       ) : null}
     </section>
   );

@@ -152,7 +152,7 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
                         <p className="text-xs text-slate-400">{formatOrderDate(order.created_at)}</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-orange-300">${Number(order.total_price).toFixed(2)}</span>
+                        <span className="text-sm font-bold text-orange-300">৳{Number(order.total_price).toFixed(2)}</span>
                         <span className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase ${paymentBadgeClass(order.payment_status)}`}>
                           {paymentStatusLabel(order.payment_status)}
                         </span>
@@ -161,7 +161,7 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
                     <div className="mt-3 space-y-1 text-sm text-slate-200">
                       {(order.order_items ?? []).map((item, index) => (
                         <p key={`${order.id}-${index}`}>
-                          {item.products?.title ?? "প্রোডাক্ট"} x{item.quantity} - ${Number(item.unit_price).toFixed(2)}
+                          {item.products?.title ?? "প্রোডাক্ট"} x{item.quantity} - ৳{Number(item.unit_price).toFixed(2)}
                         </p>
                       ))}
                     </div>
@@ -191,3 +191,4 @@ export function DashboardShell({ profile, userEmail, orders }: DashboardShellPro
     </div>
   );
 }
+

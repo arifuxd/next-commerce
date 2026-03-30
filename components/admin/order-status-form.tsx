@@ -1,4 +1,4 @@
-interface OrderStatusFormProps {
+﻿interface OrderStatusFormProps {
   orderId: string;
   currentStatus: "pending" | "paid" | "failed" | "refunded";
   action: (formData: FormData) => void | Promise<void>;
@@ -7,10 +7,10 @@ interface OrderStatusFormProps {
 const statuses = ["pending", "paid", "failed", "refunded"] as const;
 
 function statusLabel(status: (typeof statuses)[number]) {
-  if (status === "pending") return "অপেক্ষমাণ";
-  if (status === "paid") return "পরিশোধিত";
-  if (status === "failed") return "ব্যর্থ";
-  return "ফেরত";
+  if (status === "pending") return "Pending";
+  if (status === "paid") return "Paid";
+  if (status === "failed") return "Failed";
+  return "Refunded";
 }
 
 export function OrderStatusForm({ orderId, currentStatus, action }: OrderStatusFormProps) {
@@ -29,7 +29,7 @@ export function OrderStatusForm({ orderId, currentStatus, action }: OrderStatusF
         ))}
       </select>
       <button type="submit" className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-slate-100">
-        আপডেট
+        Update
       </button>
     </form>
   );

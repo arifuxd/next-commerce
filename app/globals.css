@@ -126,3 +126,41 @@ html.light header {
 }
 
 
+
+.market-loader-root {
+  background: #07101f !important;
+}
+
+.market-loader-overlay {
+  background: radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.16), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.14), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.14), transparent 35%) !important;
+}
+
+html.light .market-loader-root {
+  background: #f6f9ff !important;
+}
+
+html.light .market-loader-overlay {
+  background: radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.08), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.08), transparent 35%) !important;
+}
+
+html.light .market-loader-ring-outer {
+  border-color: rgba(148, 163, 184, 0.7) !important;
+}
+
+html.light .market-loader-ring-mid {
+  border-color: rgba(253, 186, 116, 0.7) !important;
+}
+
+html.light .market-loader-ring-spin {
+  border-top-color: #f97316 !important;
+  border-right-color: #fb923c !important;
+}
+
+html.light .market-loader-core {
+  background-image: linear-gradient(to bottom right, #fb923c, #fcd34d) !important;
+  box-shadow: 0 0 26px rgba(249, 115, 22, 0.25) !important;
+}
